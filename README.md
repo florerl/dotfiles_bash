@@ -15,6 +15,7 @@
     - `sudo systemsetup -setusingnetworktime on`
     - `sudo systemsetup -setnetworktimeserver 0.us.pool.ntp.org`
     - `sudo tee /etc/ntp.conf << EOF
+    
     `1.us.pool.ntp.org`
     
     `2.us.pool.ntp.org`
