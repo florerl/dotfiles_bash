@@ -1,2 +1,4 @@
 export EDITOR='oni'
 export VISUAL='oni'
+export LSCOLORS="exfxcxdxbxegedabagacad"
+export CLICOLOR=true
