@@ -1,0 +1,2 @@
+export EDITOR='oni'
+export VISUAL='oni'
