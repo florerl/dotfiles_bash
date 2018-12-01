@@ -6,7 +6,12 @@
     - `sudo sciutil --set LocalHostName $HOST`
     - `exec bash -l`
 1. Enable location services (sudo required, hidden from User)
-    - `sudo defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.
+    - `sudo defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -int 1
+    - `chown -R _locationd:_locationd /var/db/locationd`
+1. Enable automatic timezone update
+    - `defaults write /Library/Preferences/com.apple.timezone.auto Active -bool true`
+    - `defaults write /Library/Preferences/com.apple.locationmenu ShowSystemServices -bool true`
+    
 1. Install Xcode CLT
     - `xcode-select --install`
 1. Install Xcode & configure Xcode
