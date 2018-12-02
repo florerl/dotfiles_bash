@@ -137,6 +137,9 @@ install_dotfiles () {
   done
 }
 
+[ ! -d /opt ] && sudo mkdir /opt
+[ -d /opt ] && sudo chgrp staff /opt || fail "/opt is not a directory!!"
+
 setup_gitconfig
 install_dotfiles
 
