@@ -1,35 +1,72 @@
+export LANG=en_US.UTF-8
+export FCEDIT=vi
+export HISTFILE
+export HISTSIZE
+export TIMEFORMAT= $'\nreal\t%lR\tuser\t%lU\tsys%lS'
+export EDITOR='oni'
+export VISUAL='oni'
+
+
+
 ## Set by "system"
 # HOME, LOGNAME, TMPDIR, NLSPATH
 
 ## POSIX Shell Variables:
 #export ENV
 #export IFS
-export LANG=en_US.UTF-8
 #export LC_ALL
 #export LC_COLLATE
 #export LC_CTYPE
 #export LC_MONETARY
 #export LC_MESSAGES
 #export PATH
+
+## Shell prompt
 #export PS1
 #export PS2
 #export PS3
 #export PS4
+## bash Shell prompt
+#export PROMPT_COMMAND
 
 ## set by shell
 #LINENO, OPTARG, OPTERR, OPTIND, PPID, PWD, RANDOM, SECONDS
 
+# Other POSIX variables:
+#export TZ
+
 # set default options for 'sh/POSIX'
-export FCEDIT=vi
-export HISTFILE
-export HISTSIZE
 #export MAIL
 #export MAILCHECK
 #export MAILPATH
 #export TERM=xterm-256color
 
-# Other POSIX variables:
-#export TZ
+# set default options for 'bash/GNU'
+#export BASH_ENV=
+#export COMPREPLY
+#export FIGNORE
+#export GLOBIGNORE
+#export HISTCONTROL
+#export HISTTIMEFORMAT
+#export HOSTFILE
+#export IGNOREEOF
+#export INPUTRC
+#export POSIXLY_CORRECT
+#export TMOUT
+#export auto_resume
+#export histchars=!^#
+
+
+
+#export TERM_PROGRAM=Apple_Terminal
+
+## set by bash
+# BASH{,_ARGC,_ARGV,_COMMAND,_EXECUTION_STRING,_LINENO,_REMATCH,},
+# BASH{_SOURCE,_SUBSHELL,_VERSINFO{,[0],[1],[2],[3],[4],[5]},_VERSION},
+# COMP{_CWORD,_LINE,_POINT,_WORDBREAKS,_WORDS}, DIRSTACK, EUID,
+# FUNCNAME, GROUPS, HISTCMD, HOSTNAME, HOSTTYPE, MACHTYPE, PIPESTATUS,
+# REPLY, SHELLOPTS, SHLVL, UID
+
 
 # set default options for fmtmsg()
 #export MSGVERB="label:severity:text:action:tag"
@@ -103,11 +140,6 @@ export CLICOLOR=true
 # undefined but recognized in POSIX
 #CHARSET, HISTORY, MAILER, PROCLANG, TERMCAP, TERMINFO, USER
 
-
-# set default options for 'bash'
-#export TERM_PROGRAM=Apple_Terminal
-export EDITOR='oni'
-export VISUAL='oni'
 
 
 # set default options for 'less'
