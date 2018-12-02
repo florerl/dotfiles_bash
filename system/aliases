@@ -1,0 +1,44 @@
+# Application.app
+alias safari='open -a Safari'
+alias chrome='open -a Chrome'
+alias canary='open -a "Google Chrome Canary"'
+alias brave='open -a Brave'
+alias vivaldi='open -a Vivaldi'
+
+[ -z $(which oni) ] && alias oni='/Applications/Oni.app/Contents/MacOS/Oni'
+
+alias slack='open -a Slack'
+
+# Shortcuts - Universal
+  # Reload the shell (i.e. invoke as a login shell)
+alias reload="exec ${SHELL} -l"
+  # Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+
+
+# Shortcuts - macOS
+  # PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
+alias plistbuddy="/usr/libexec/PlistBuddy"
+  # Usage: `pdfjoin -o output.pdf input{1,2,3}.pdf`
+alias pdfjoin='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
+
+  # Lock the screen (when going AFK)
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+# Show active network interfaces
+alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+  # Flush Directory Service cache
+alias dnsflush='dscacheutil -flushcache && killall -HUP mDNSResponder'
+  # Clean up LaunchServices to remove duplicates in the “Open With” menu
+alias lscleanup='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder'
+  # Empty the Trash on all mounted volumes and the main HDD.
+alias emptytrash='sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash' 
+  # Clear download history from quarantine. https://mths.be/bum
+alias gasprison='sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent"'
+
+alias showdot="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hidedot="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias bonjouroff="defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array-add -NoMulticastAdvertisements"
+alias bonjouron="defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array /usr/sbin/mDNSResponder -launchd"
