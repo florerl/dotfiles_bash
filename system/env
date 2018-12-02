@@ -1,38 +1,40 @@
 ## Set by "system"
-# HOME, LOGNAME, TMPDIR
+# HOME, LOGNAME, TMPDIR, NLSPATH
+
+## POSIX Shell Variables:
+#export ENV
+#export IFS
+export LANG=en_US.UTF-8
+#export LC_ALL
+#export LC_COLLATE
+#export LC_CTYPE
+#export LC_MONETARY
+#export LC_MESSAGES
+#export PATH
+#export PS1
+#export PS2
+#export PS3
+#export PS4
+
+## set by shell
+#LINENO, OPTARG, OPTERR, OPTIND, PPID, PWD, RANDOM, SECONDS
 
 # set default options for 'sh/POSIX'
 export FCEDIT=vi
 export HISTFILE
 export HISTSIZE
-export LANG=en_US.UTF-8
-#export LC_ALL
-#export LC_COLLATE
-#export LC_CTYPE
-#export LC_MESSAGES
-#export LC_MONETARY
-#export LC_NUMERIC
-#export LC_TIME
 #export MAIL
 #export MAILCHECK
 #export MAILPATH
-#export NLSPATH
-#export PATH
 #export TERM=xterm-256color
 
-## set by shell
-#LINENO
-#OPTARG
-#OPTERR
-#OPTIND
-
-# Available variables:
+# Other POSIX variables:
 #export TZ
-#export ENV
-#export IFS
 
-#export MSGVERB #fmtmsg() components
-#export DATEMSK #getdate() path
+# set default options for fmtmsg()
+#export MSGVERB="label:severity:text:action:tag"
+# set default options for getdate()
+#export DATEMSK=/path/to/template/file
 
 # set default options for terminal control
 #export COLUMNS
@@ -62,11 +64,35 @@ export CLICOLOR=true
 #export MAILRC
 #export MBOX
 
-# set default options for development/POSIX
+# set default options for development/POSIX (make, scss)
 #export PROJECTDIR
 
 # set default options for 'make/POSIX'
 #export MAKEFLAGS
+## flags for make rules:
+#ARFLAGS
+### CLANG Dev Utility flags
+#YACC=yacc
+#YFLAGS=
+#LEX=lex
+#LFLAGS=
+#LDFLAGS=
+#CC=c99
+#CFLAGS=-O3
+### FORTRAN flags
+#FC=fort77
+#FFLAGS=
+### 
+#GET=get
+#GFLAGS=
+## NOT POSIX
+#export MAKESHELL
+#export NPROC
+
+
+# set default options of 'man/POSIX'
+## NOT POSIX
+#MANPATH
 
 # set default options for 'more/POSIX'
 #export MORE
@@ -74,35 +100,8 @@ export CLICOLOR=true
 # set default options for 'qsub/POSIX'
 #export PBS_DPREFIX
 
-#ARFLAGS
-#CC
-#CFLAGS
-#CHARSET
-#FC
-#FFLAGS
-#GET
-#GFLAGS
-#HISTORY
-#LDFLAGS
-#LEX
-#LFLAGS
-#MAILER
-#MAKESHELL
-#MANPATH
-#NPROC
-#PPID
-#PROCLANG
-#PS1
-#PS2
-#PS3
-#PS4
-#RANDOM
-#SECONDS
-#TERMCAP
-#TERMINFO
-#USER
-#YACC
-#YFLAGS
+# undefined but recognized in POSIX
+#CHARSET, HISTORY, MAILER, PROCLANG, TERMCAP, TERMINFO, USER
 
 
 # set default options for 'bash'
