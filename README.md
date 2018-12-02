@@ -1,4 +1,5 @@
 # dotfiles
+H/T: https://github.com/holman/dotfiles
 
 ## topical
 
