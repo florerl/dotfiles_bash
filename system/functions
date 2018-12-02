@@ -1,0 +1,17 @@
+function  update {
+  sudo softwareupdate -i -a \
+    # No brewing
+#		&& brew update \
+#		&& brew upgrade \
+#		&& brew cleanup \
+    # No Macports
+#   && sudo port selfupdate \
+#   && sudo port upgrade outdated \
+    # Nodejs PM
+		&& npm install npm -g \
+		&& npm update -g \
+    # RubyGems
+		&& sudo gem update --system \
+		&& sudo gem update \
+		&& sudo gem cleanup'
+}
