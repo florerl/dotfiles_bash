@@ -113,15 +113,36 @@ this script in `bin/`.
 
     ```
     sudo mkdir /opt
-    sudo chgroup staff /opt
+    sudo chgroup -R staff /opt/
+    sudo chmod -R g+w /opt/
     ```
 
 1. Install Intel Compilers
 
-    - Log in
+    - Log in: https://software.intel.com/en-us/user/login?destination=node/790487
 
     ```
+    mkdir /opt/intel/
+    cd /opt/intel/
+    curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14903/m_pythoni3_p_2019.1.056.tar.gz"
+    tar -xvzf m_pythoni3_p_2019.1.056.tar.gz
+    bash intelpython3 setup_intel_python.sh
     
+    curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14903/m_pythoni2_p_2019.1.056.tar.gz"
+    tar -xvzf m_pythoni2_p_2019.1.056.tar.gz
+    bash intelpython2 setup_intel_python.sh
+    ```
+    
+    - Add to logon script:
+    
+    ```
+    source /opt/intel/intelpython3/bin/activate root
+    source /opt/intel/intelpython3/bin/activate root
+    ```
+    
+    - Continue install
+    
+    ```
     curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14826/m_ccompxe_2019.1.034.dmg"
     hdiutil attach m_ccompxe_2019.1.0.34.dmg
     open /Volumes/m_ccompxe_2019.1.034/m_ccompxe_2019.1.034.app/
@@ -135,6 +156,7 @@ this script in `bin/`.
     read "Press Return (Enter) to continue"
     hdiutil detach /Volumes/m_fcompxe_2019.1.034
     mv m_fcompxe_2019.1.0.34.dmg ~/.Trash
+
 
     source /opt/intel/bin/compilervars.sh intel64
 
