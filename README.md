@@ -82,14 +82,15 @@ this script in `bin/`.
     
 1. Enable network time (sudo requiried, authorization)
 
-  ```sudo systemsetup -setusingnetworktime on
-         sudo systemsetup -setnetworktimeserver 0.us.pool.ntp.org
-         sudo tee /etc/ntp.conf << EOF
-         1.us.pool.ntp.org
-         2.us.pool.ntp.org
-         3.us.pool.ntp.org
-         EOF
-  ```
+    ```
+    sudo systemsetup -setusingnetworktime on
+    sudo systemsetup -setnetworktimeserver 0.us.pool.ntp.org
+    sudo tee /etc/ntp.conf << EOF
+    1.us.pool.ntp.org
+    2.us.pool.ntp.org
+    3.us.pool.ntp.org
+    EOF
+    ```
 
 1. Update system
 
@@ -107,20 +108,23 @@ this script in `bin/`.
 
 1. Prepare /opt
 
-    ```sudo mkdir /opt
+    ```
+    sudo mkdir /opt
     sudo chgroup staff /opt
     ```
 
 1. Install Spack
 
-    ```cd /opt
+    ```
+    cd /opt
     git clone https://github.com/spack/spack.git
     ```
   
 1. ...
 
 
-```function install_pkg {
+```
+function install_pkg {
     #TODO: error checking...
     pkgutil --check-signature $1 && \
     sudo installer -package $1 -target / || \
