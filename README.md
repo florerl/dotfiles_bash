@@ -102,7 +102,20 @@ this script in `bin/`.
 
     - Use GUI...
     
+1. Install Intel Compilers
+
+1. Prepare /opt
+
+    - ```sudo mkdir /opt
+      sudo chgroup staff /opt```
+
+1. Install Spack
+
+    - ```cd /opt
+      git clone https://github.com/spack/spack.git
+      ```
 1. ...
+
 
 ```function install_pkg {
     #TODO: error checking...
