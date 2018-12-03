@@ -111,15 +111,23 @@ this script in `bin/`.
     
 1. Install Intel Compilers
 
+    - Log in
+
     ```
+    
     curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14826/m_ccompxe_2019.1.034.dmg"
     hdiutil attach m_ccompxe_2019.1.0.34.dmg
     open /Volumes/m_ccompxe_2019.1.034/m_ccompxe_2019.1.034.app/
     read "Press Return (Enter) to continue"
-    source /opt/intel/bin/compilervars.sh intel64
+    hdiutil detach /Volumes/m_ccompxe_2019.1.034
     
     curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14828/m_fcompxe_2019.1.034.dmg"
     hdiutil attach m_fcompxe_2019.1.034.dmg
+    open /Volumes/m_fcompxe_2019.1.034/m_fcompxe_2019.1.034.app/
+    read "Press Return (Enter) to continue"
+    hdiutil detach /Volumes/m_fcompxe_2019.1.034
+    
+    source /opt/intel/bin/compilervars.sh intel64
 
 1. Install Golang
 
