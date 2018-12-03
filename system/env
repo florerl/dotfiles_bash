@@ -1,64 +1,60 @@
-export LANG=en_US.UTF-8
-export FCEDIT=vi
-export HISTFILE
-export HISTSIZE
-export TIMEFORMAT= $'\nreal\t%lR\tuser\t%lU\tsys%lS'
 export EDITOR='oni'
 export VISUAL='oni'
-
-
 
 ## Set by "system"
 # HOME, LOGNAME, TMPDIR, NLSPATH
 
 ## POSIX Shell Variables:
-#export ENV
-#export IFS
-#export LC_ALL
-#export LC_COLLATE
-#export LC_CTYPE
-#export LC_MONETARY
-#export LC_MESSAGES
-#export PATH
+  #export ENV
+  #export IFS
+export LANG=en_US.UTF-8
+  #export LC_ALL
+  #export LC_COLLATE
+  #export LC_CTYPE
+  #export LC_MONETARY
+  #export LC_MESSAGES
+##   
+  #export PATH
 
 ## Shell prompt
-#export PS1
-#export PS2
-#export PS3
-#export PS4
+  #export PS1
+  #export PS2
+  #export PS3
+  #export PS4
 ## bash Shell prompt
-#export PROMPT_COMMAND
+  #export PROMPT_COMMAND
 
 ## set by shell
 #LINENO, OPTARG, OPTERR, OPTIND, PPID, PWD, RANDOM, SECONDS
 
 # Other POSIX variables:
-#export TZ
+  #export TZ
 
 # set default options for 'sh/POSIX'
-#export MAIL
-#export MAILCHECK
-#export MAILPATH
-#export TERM=xterm-256color
+export FCEDIT=vi
+export HISTFILE
+export HISTSIZE='32786'
+  #export MAIL
+  #export MAILCHECK
+  #export MAILPATH
+  #export TERM=xterm-256color
 
 # set default options for 'bash/GNU'
-#export BASH_ENV=
-#export COMPREPLY
-#export FIGNORE
-#export GLOBIGNORE
-#export HISTCONTROL
-#export HISTTIMEFORMAT
-#export HOSTFILE
-#export IGNOREEOF
-#export INPUTRC
-#export POSIXLY_CORRECT
-#export TMOUT
-#export auto_resume
-#export histchars=!^#
-
-
-
-#export TERM_PROGRAM=Apple_Terminal
+  #export BASH_ENV=
+  #export COMPREPLY
+  #export EMACS
+  #export FIGNORE
+  #export GLOBIGNORE
+  export HISTCONTROL='ignoreboth'
+  #export HISTTIMEFORMAT
+  #export HOSTFILE
+  #export IGNOREEOF
+  #export INPUTRC
+  #export POSIXLY_CORRECT
+export TIMEFORMAT= $'\nreal\t%lR\tuser\t%lU\tsys%lS'
+  #export TMOUT
+  #export auto_resume
+  #export histchars=!^#
 
 ## set by bash
 # BASH{,_ARGC,_ARGV,_COMMAND,_EXECUTION_STRING,_LINENO,_REMATCH,},
@@ -154,10 +150,23 @@ export NODE_REPL_HISTORY_SIZE='32768';
 # Use sloppy mode by default, matching web browsers.
 export NODE_REPL_MODE='sloppy';
 
-# Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
+# set default options for 'python'
+#export PYTHONHOME
+#export PYTHONPATH
+#export PYTHONSTARTUP
+#export PYTHONY2K
+#export PYTHONOPTIMIZE
+#export PYTHONDEBUG
+#export PYTHONDONTWRITEBYTECODE
+#export PYTHONINSPECT
 export PYTHONIOENCODING='UTF-8';
+#export PYTHONNOUSERSITE
+#export PYTHONUNBUFFERED
+#export PYTHONVERBOSE
+#export PYTHONWARNINGS
+#export PYTHONHASHSEED
 
-
+#export TERM_PROGRAM=Apple_Terminal
 Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.TSm5ERVeTP/Render
 TERM_PROGRAM_VERSION=421.1
 TERM_SESSION_ID=ED939CF3-AADF-45AF-84EA-CBA320D035D7
