@@ -106,8 +106,9 @@ this script in `bin/`.
 
 1. Prepare /opt
 
-    - ```sudo mkdir /opt
-      sudo chgroup staff /opt```
+    - ```
+    sudo mkdir /opt
+    sudo chgroup staff /opt```
 
 1. Install Spack
 
