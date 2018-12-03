@@ -112,7 +112,7 @@ this script in `bin/`.
 1. Install Spack
 
     ```cd /opt
-    git clone https://github.com/spack/spack.git ```
+    git clone https://github.com/spack/spack.git```
   
 1. ...
 
