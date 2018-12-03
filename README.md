@@ -88,7 +88,8 @@ this script in `bin/`.
          1.us.pool.ntp.org
          2.us.pool.ntp.org
          3.us.pool.ntp.org
-         EOF```
+         EOF
+  ```
 
 1. Update system
 
@@ -107,12 +108,14 @@ this script in `bin/`.
 1. Prepare /opt
 
     ```sudo mkdir /opt
-    sudo chgroup staff /opt```
+    sudo chgroup staff /opt
+    ```
 
 1. Install Spack
 
     ```cd /opt
-    git clone https://github.com/spack/spack.git```
+    git clone https://github.com/spack/spack.git
+    ```
   
 1. ...
 
