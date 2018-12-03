@@ -82,7 +82,7 @@ this script in `bin/`.
     
 1. Enable network time (sudo requiried, authorization)
 
-    - ```sudo systemsetup -setusingnetworktime on
+  ```sudo systemsetup -setusingnetworktime on
          sudo systemsetup -setnetworktimeserver 0.us.pool.ntp.org
          sudo tee /etc/ntp.conf << EOF
          1.us.pool.ntp.org
@@ -106,15 +106,14 @@ this script in `bin/`.
 
 1. Prepare /opt
 
-    - ```
-    sudo mkdir /opt
+    ```sudo mkdir /opt
     sudo chgroup staff /opt```
 
 1. Install Spack
 
-    - ```cd /opt
-      git clone https://github.com/spack/spack.git
-      ```
+    ```cd /opt
+    git clone https://github.com/spack/spack.git ```
+  
 1. ...
 
 
