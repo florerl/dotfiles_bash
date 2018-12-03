@@ -98,13 +98,35 @@ this script in `bin/`.
     
 1. Install Xcode CLT
 
-    - `xcode-select --install`
+   ```
+   xcode-select --install
+   sudo xcodebuild -license accept
+   installer -package /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target \
+   ```
+    
     
 1. Install Xcode & configure Xcode
 
     - Use GUI...
     
 1. Install Intel Compilers
+
+    ```
+    curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14826/m_ccompxe_2019.1.034.dmg"
+    hdiutil attach m_ccompxe_2019.1.0.34.dmg
+    open /Volumes/m_ccompxe_2019.1.034/m_ccompxe_2019.1.034.app/
+    read "Press Return (Enter) to continue"
+    source /opt/intel/bin/compilervars.sh intel64
+    
+    curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14828/m_fcompxe_2019.1.034.dmg"
+    hdiutil attach m_fcompxe_2019.1.034.dmg
+
+1. Install Golang
+
+    ```
+    curl -LO "https://dl.google.com/go/go1.11.2.darwin-amd64.pkg"
+    install_pkg go1.11.2.darwin-arm64.pkg
+    ```
 
 1. Prepare /opt
 
@@ -118,8 +140,18 @@ this script in `bin/`.
     ```
     cd /opt
     git clone https://github.com/spack/spack.git
+    export SPACK_ROOT=/opt/spack
+    export PATH=$SPACK_ROOT/bin:$PATH
+    source $SPACK_ROOT/share/spack/setup-env.sh
+    spack compiler find
     ```
   
+1. Install Macports?
+    
+    ```
+    curl -LO https://github.com/macports/macports-base/releases/download/v2.5.4/MacPorts-2.5.4-10.14-Mojave.pkg
+    
+
 1. ...
 
 
