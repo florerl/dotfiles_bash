@@ -1,9 +1,64 @@
-# Local/private config goes in the include
-[include]
+# 1. # and ; characters begin comments to the end of line, blank lines are ignored
+# 2. All the other lines (and the remainder of the line after the section header) are recognized as setting variables, 
+#       in the form:
+# 		name		= value
+#	(or just name, which is a short-hand to say that the variable is the boolean "true")
+# 3. Variable names are case-insensitive, allow only alphanumeric characters and -, 
+#       and must start with an alphabetic character
+# 4. A line that defines a value can be continued to the next line by ending it with a \; 
+#       the backquote and the end-of-line are stripped
+# 5. Leading whitespaces after 'name =', the remainder of the line after the first comment character # or ;, 
+#       and trailing whitespaces of the line are discarded unless they are enclosed in double quotes
+# 6. Internal whitespaces within the value are retained verbatim
+# 7. Inside double quotes, double quote (") and backslash (\) characters must be escaped
+# 8. The following escape sequences are recognized:
+#               \n	for newline character (NL)
+#       	\t	for horizontal tabulation (HT, TAB)
+#		\b	for backspace (BS)
+# 9. Other char escape sequences (including octal escape sequences) are invalid
+
+# Boolean true literals are "yes", "on", "true", and "1". 
+#       Also, a variable defined without = <value> is taken as true
+# Boolean false literals are "no", "off", "false", "0" and the empty string ("").
+
+# The value for many variables that specify various sizes can be suffixed with k, M, …, 
+#       to mean "scale the number by 1024", "by 1024x1024", etc.
+
+# Available colors: "normal", "black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"
+# The first color given is the foreground; the second is the background
+# Colors may also be given as numbers between 0 and 255; 
+#       these use ANSI 256-color mode (but note that not all terminals may support this)
+# If your terminal supports it, you may also specify 24-bit RGB values as hex, like "#ff0ab3"
+
+# Color attributes: "bold", "dim", "ul" (underline), "blink", 
+#       "reverse" (background then foreground), "italic", "strike"
+# Specific attributes may be turned off by prefixing them with "no" or "no-" 
+#       (e.g., "noreverse", "no-ul", etc)
+
+# An empty color string ("") produces no color effect at all; 
+#       this can be used to avoid coloring specific elements without disabling color entirely.
+
+#[advice]
+# These variables control various optional help messages designed to aid new users
+# All advice.* variables default to true, and you can tell Git that you do not need help by setting these to f
+
+
+[include]       # Local/private config goes in the include
         path = ~/.gitconfig.local
 [hub]
         protocol = https
 [alias]
+        # 1. To avoid confusion and troubles with script usage, 
+        #       aliases that hide existing Git commands are ignored
+	# 2. Arguments are split by spaces, the usual shell quoting and escaping is supported
+	# 3. A quote pair or a backslash can be used to quote them
+	# 4. If the alias expansion is prefixed with an exclamation point, 
+        #       it will be treated as a shell command
+	# 4.1 Note that shell commands will be executed from the top-level directory of a repository, 
+        #       which may not necessarily be the current directory
+        
+	# List aliases
+        aliases = config --get-regexp alias
         co = checkout
         promote = !$ZSH/bin/git-promote
         wtf     = !$ZSH/bin/git-wtf
