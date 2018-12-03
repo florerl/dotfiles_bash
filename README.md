@@ -123,14 +123,17 @@ this script in `bin/`.
 
     ```
     mkdir /opt/intel/
-    cd /opt/intel/
+    pushd /opt/intel/
     curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14903/m_pythoni3_p_2019.1.056.tar.gz"
     tar -xvzf m_pythoni3_p_2019.1.056.tar.gz
+    mv m_pythoni3_p_2019.1.056.tar.gz ~/.Trash
     bash intelpython3 setup_intel_python.sh
     
     curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14903/m_pythoni2_p_2019.1.056.tar.gz"
     tar -xvzf m_pythoni2_p_2019.1.056.tar.gz
+    mv m_pythoni2_p_2019.1.056.tar.gz ~/.Trash
     bash intelpython2 setup_intel_python.sh
+    popd
     ```
     
     - Add to logon script:
@@ -190,16 +193,31 @@ this script in `bin/`.
     mv python-2.7.15-macosx10.9.pkg ~/.Trash
     ```
 
+1. Install pkgsrc
+
+    ```
+    pushd /opt
+    git clone https://github.com/NetBSD/pkgsrc.git -b trunk --single-branch
+    export PKG_ROOT=/opt/pkgsrc
+    cd $PKG_ROOT=pkgsrc/bootstrap
+    sh bootstrap
+    mkdir $PKG_ROOT
+    
+    popd
+    ```
+    
+
 1. Install Spack
 
     ```
-    cd /opt
+    pushd /opt
     git clone https://github.com/spack/spack.git
     export SPACK_ROOT=/opt/spack
     export PATH=$SPACK_ROOT/bin:$PATH
     source $SPACK_ROOT/share/spack/setup-env.sh
     spack compiler find
     spack gpg init
+    popd
     ```
   
 1. Install Macports?
