@@ -48,15 +48,27 @@ set smarttab              " use tabs at the start of a line, spaces elsewhere
 "---------------------
 set number                  " show number lines
 set rnu                     " relative line numbering
+
+set scrolloff=3 " Scroll when the cursor is 3 lines from edge
+set autowriteall " Save when doing various buffer-switching things.
+set showmatch " Show matching brackets
+set swapfile " Keep swapfiles
+set directory=~/.vim-tmp,~/tmp,/var/tmp,/tmp
+set backupdir=~/.vim-tmp,~/tmp,/var/tmp,/tmp
+set colorcolumn=80 " column so I don't go over the line limit
+
 set incsearch               " incremental search (as string is being typed)
-set hls                     " highlight search
+set hls                     " highlight all searched items
+
 set listchars=tab:>>,nbsp:~ " set list to see tabs and non-breakable spaces
 set lbr                     " line break
+
 set ruler                   " show current position in file
 set scrolloff=5             " show lines above and below cursor (when possible)
+
 set noshowmode              " hide mode
 set laststatus=2            " last window always has a statusline
-set showcmd                                 " show current command
+set showcmd                 " Show typed command prefixes while waiting for operator
 set backspace=indent,eol,start              " allow backspacing over everything
 set timeout timeoutlen=1000 ttimeoutlen=100 " fix slow O inserts
 set lazyredraw                              " skip redrawing screen in some cases
@@ -66,17 +78,18 @@ set history=8192            " more history
 set nojoinspaces            " suppress inserting two spaces between sentences
 
 " use 4 spaces instead of tabs during formatting
-set expandtab
-set tabstop=4             " tab spacing
-set shiftwidth=4          " indent/outdent by 4 columns
-set softtabstop=4         " unify
+set expandtab               " Use soft tabs
+set tabstop=4               " tab spacing
+set shiftwidth=4            " indent/outdent by 4 columns
+set softtabstop=4           " unify
 
 " smart case-sensitive search
-set ignorecase            " Make searches case-insensitive.
-set smartcase
-set nohlsearch            " Don't continue to highlight searched phrases.
+set ignorecase              " Make searches case-insensitive.
+set smartcase               " Smart case-sensitivity when searching (overrides ignorecase)
+set nohlsearch              " Don't continue to highlight searched phrases.
 
 " tab completion for files/bufferss
+"set wildmode=list:longest " Bash-like tab completion
 set wildmode=longest,list
 set wildmenu
 
@@ -91,29 +104,59 @@ endif
 "--------------------
 " Misc configurations
 "--------------------
-
-" unbind keys
-map <C-a> <Nop>
-map <C-x> <Nop>
-
 " disable audible bell
 set noerrorbells visualbell t_vb=
+"set visualbell " Suppress audio/visual error bell
 
 " open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
 
-" quicker window movement
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
-
-" toggle relative numbering
-nnoremap <C-n> :set rnu!<CR>
-
 " save read-only files
 command -nargs=0 Sudow w !sudo tee % >/dev/null
+
+"--------------------
+" Bindings
+"--------------------
+" unbind keys
+"map <C-a> <Nop>
+"map <C-x> <Nop>
+
+" quicker window movement
+"nnoremap <C-j> <C-w>j
+"nnoremap <C-k> <C-w>k
+"nnoremap <C-h> <C-w>h
+"nnoremap <C-l> <C-w>l
+
+" toggle relative numbering
+"nnoremap <C-n> :set rnu!<CR>
+
+let mapleader=","
+set pastetoggle=<F2>
+
+"w!! for sudo saving
+cmap w!! w !sudo tee % >/dev/null
+
+" Remove whitespace on save
+autocmd BufRead,BufWritePre,FileWritePre * silent! %s/[\r \t]\+$//
+
+" Reload .vimrc
+"map <leader>rv  :source ~/.vimrc<CR>
+
+" Previous/next buffers
+"map <M-Left>  :bp<CR>
+"map <M-Right> :bn<CR>
+
+" Open and close the quickfix window
+"map <leader>qo :copen<CR>
+"map <leader>qc :cclose<CR>
+
+" Easy access to the shell
+"map <Leader><Leader> :!
+
+" Jump to a new line in insert mode
+"imap <D-CR> <Esc>o
+
 
 "---------------------
 " Local customizations
