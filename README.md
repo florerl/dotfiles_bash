@@ -56,7 +56,19 @@ defaults, and so on. Tweak this script, and occasionally run `dot` from
 time to time to keep your environment fresh and up-to-date. You can find
 this script in `bin/`.
 
+## Git submodule
 
+- Add submodule foo/bar to directory bar:
+
+    ```git submodule add https://github.com/foo/bar bar```
+
+- Initializing/checking-out submodule:
+
+    ```git submodule update --init --recursive```
+
+- Upgrading submodule
+
+    ```git submodule update --init --remote```
 
 ## Bootstrap ToDo:
 
