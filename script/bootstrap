@@ -2,8 +2,9 @@
 #
 # bootstrap installs things.
 
-cd "$(dirname "$0")/.."
-DOTFILES_ROOT=$(pwd -P)
+#cd "$(dirname "$0")/.."
+DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+
 
 set -e
 
@@ -84,11 +85,16 @@ install_dotfiles () {
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 \( -not -name '*.sh' \) -not -path '*.git*')
+  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 1 -not \(-iname '*.md' -or -iname '*.git' \) )
   do
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
   done
+}
+
+function install_dotfiles {
+  for f in {}; do
+    ln -s 
 }
 
 [ ! -d /opt ] && sudo mkdir /opt
