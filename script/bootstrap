@@ -92,10 +92,10 @@ install_dotfiles () {
   done
 }
 
-function install_dotfiles {
-  for f in {}; do
-    ln -s 
-}
+#function install_dotfiles {
+#  for f in {}; do
+#    ln -s 
+#}
 
 [ ! -d /opt ] && sudo mkdir /opt
 [ -d /opt ] && sudo chgrp staff /opt || fail "/opt is not a directory!!"
