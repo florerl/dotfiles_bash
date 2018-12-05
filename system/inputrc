@@ -1,0 +1,209 @@
+# "\e[1;9D": backward-word
+# "\e[1;9C": forward-word
+
+## Commands for Moving
+#C-a: beginning-of-line   #Move to the start of the current line.
+#C-e: end-of-line         #Move to the end of the line.
+#C-f: forward-char        #Move forward a character.
+#C-b: backward-char       #Move back a character.
+#M-f: forward-word        #Move forward to the end of the next word.
+                          #Words are composed of alphanumeric characters (letters and digits).
+#M-b: backward-word       #Move back to the start of the current or previous word.
+                          #Words are composed of alphanumeric characters (letters and digits).
+#C-l: clear-screen        #Clear the screen leaving the current line at the top of the screen.
+                          #With an argument, refresh the current line without clearing the screen.
+#: redraw-current-line    #Refresh the current line.
+
+## Commands for Manipulating the History
+#Newline: accept-line     #Accept the line regardless of where the cursor is.
+#Return: accept-line      #If this line is non-empty, add it to the history list according to the state of the HISTCONTROL variable.
+                          #If the line is a modified history line, then restore the history line to its original state.
+#C-p: previous-history    #Fetch the previous command from the history list, moving back in the list.
+#C-n: next-history        #Fetch the next command from the history list, moving forward in the list.
+#M-<: beginning-of-history    #Move to the first line in the history.
+#M->: end-of-history          #Move to the end of the input history, i.e., the line currently being entered.
+#C-r: reverse-search-history  #Search backward starting at the current line and moving `up' through the history as necessary.
+                              #This is an incremental search.
+#C-s: forward-search-history  #Search forward starting at the current line and moving `down' through the history as necessary.
+                              #This is an incremental search.
+#M-p: non-incremental-reverse-search-history  #Search backward through the history starting at the current line using a non-incremental search for a string supplied by the user.
+#M-n: non-incremental-forward-search-history  #Search forward through the history using a non-incremental search for a string supplied by the user.
+#: history-search-forward     #Search forward through the history for the string of characters between the start of the current line and the point.
+                              #This is a non-incremental search.
+#: history-search-backward    #Search backward through the history for the string of characters between the start of the current line and the point.
+                              #This is a non-incremental search.
+#M-C-y: yank-nth-arg          #Insert the first argument to the previous command (usually the second word on the previous line) at point.
+                              #With an argument n, insert the nth word from the previous command (the words in the previous command begin with word 0).
+                              #A negative argument inserts the nth word from the end of the previous command.
+                              #Once the argument n is computed, the argument is extracted as if the "!n" history expansion had been specified.
+#M-.: yank-last-arg           #Insert the last argument to the previous command (the last word of the previous history entry).
+#M-_: yank-last-arg           #With an argument, behave exactly like yank-nth-arg.
+                              #Successive calls to yank-last-arg move back through the history list, inserting the last argument of each line in turn.  
+                              #The history expansion facilities are used to extract the last argument, as if the "!$" history expansion had been specified.
+#M-C-e: shell-expand-line     #Expand the line as the shell does.
+                              #This performs alias and history expansion as well as all of the shell word expansions.
+#M-^: history-expand-line     #Perform history expansion on the current line.
+#: magic-space                #Perform history expansion on the current line and insert a space.
+#: alias-expand-line          #Perform alias expansion on the current line.
+#: history-and-alias-expand-line  #Perform history and alias expansion on the current line.
+#M-.: insert-last-argument    #A synonym for yank-last-arg.
+#M-_: insert-last-argument
+#C-o: operate-and-get-next    #Accept the current line for execution and fetch the next line relative to the current line from the history for editing.  
+                              #Any argument is ignored.
+#C-xC-e: edit-and-execute-command #Invoke an editor on the current command line, and execute the result as shell commands.
+                              #Bash attempts to invoke $FCEDIT, $EDITOR, and emacs as the editor, in that order.
+
+## Commands for Changing Text
+#self-insert (a, b, A, 1, !, ...) #Insert the character typed.
+
+#C-d: delete-char             #Delete the character at point.
+                              #If point is at the beginning of the line, there are no characters in the line, 
+                              # and the last character typed was not bound to delete-char, then return EOF.
+#Rubout: backward-delete-char #Delete the character behind the cursor.
+                              #When given a numeric argument, save the deleted text on the kill ring.
+#: forward-backward-delete-char #Delete the character under the cursor, unless the cursor is at the end of the line, 
+                              #in which case the character behind the cursor is deleted.
+#C-q: quoted-insert           #Add the next character typed to the line verbatim.
+#C-v: quoted-insert           #This is how to insert characters like C-q, for example.
+#C-v TAB: tab-insert          #Insert a tab character.
+#C-t: transpose-chars         #Drag the character before point forward over the character at point, moving point forward as well.
+                              #If point is at the end of the line, then this transposes the two characters before point. 
+                              #Negative arguments have no effect.
+#M-t: transpose-words (M-t)   #Drag the word before point past the word after point, moving point over that word as well.
+                              #If point is at the end of the line, this transposes the last two words on the line.
+#M-u: upcase-word (M-u)       #Uppercase the current (or following) word.  
+                              #With a negative argument, uppercase the previous word, but do not move point.
+#M-l: downcase-word (M-l)     #Lowercase the current (or following) word.
+                              #With a negative argument, lowercase the previous word, but do not move point.
+#M-c: capitalize-word (M-c)   #Capitalize the current (or following) word.  
+                              #With a negative argument, capitalize the previous word, but do not move point.
+#: overwrite-mode             #Toggle overwrite mode.  
+                              #With an explicit positive numeric argument, switches to overwrite mode.   
+                              #With an explicit non-positive numeric argument, switches to insert mode.  
+                              #This command affects only emacs mode; vi mode does overwrite differently.  
+                              #Each call to readline() starts in insert mode.  
+                              #In overwrite mode, characters bound to self-insert replace the text at point rather than pushing the text to the right.   
+                              #Characters bound to backward-delete-char replace the character before point with a space.
+                              #By default, this command is unbound.
+
+## Killing and Yanking
+#C-k: kill-line                 #Kill the text from point to the end of the line.
+#C-x Rubout: backward-kill-line #Kill backward to the beginning of the line.
+#C-u: unix-line-discard         #Kill backward from point to the beginning of the line.  
+                                #The killed text is saved on the kill-ring.
+#: kill-whole-line              #Kill all characters on the current line, no matter where point is.
+#M-d: kill-word                 #Kill from point to the end of the current word, or if between words, to the end of the next word.  
+                                #Word boundaries are the same as those used by forward-word.
+#M-Rubout: backward-kill-word   #Kill the word behind point.  Word boundaries are the same as those used by backward-word.
+#C-w: unix-word-rubout          #Kill the word behind point, using white space as a word boundary.
+                                #The killed text is saved on the kill-ring.
+#: unix-filename-rubout         #Kill the word behind point, using white space and the slash character as the word boundaries.
+                                #The killed text is saved on the kill-ring.
+#M-\: delete-horizontal-space   #Delete all spaces and tabs around point.
+#: kill-region                  #Kill the text in the current region.
+#: copy-region-as-kill          #Copy the text in the region to the kill buffer.
+#: copy-backward-word           #Copy the word before point to the kill buffer.
+                                #The word boundaries are the same  as  backward-word.
+#: copy-forward-word            #Copy the word following point to the kill buffer.
+                                #The word boundaries are the same as forward-word.
+#C-y: yank                      #Yank the top of the kill ring into the buffer at point.
+#M-y: yank-pop                  #Rotate the kill ring, and yank the new top.
+                                #Only works following yank or yank-pop.
+
+## Numeric Arguments
+#M-0  #Add 0 to the argument already accumulating, or start a new argument.
+#M-1  #Add 1 to the argument already accumulating, or start a new argument.
+#M-2  #Add 2 to the argument already accumulating, or start a new argument.
+#M-3  #Add 3 to the argument already accumulating, or start a new argument.
+#M-4  #Add 4 to the argument already accumulating, or start a new argument.
+#M-5  #Add 5 to the argument already accumulating, or start a new argument.
+#M-6  #Add 6 to the argument already accumulating, or start a new argument.
+#M-7  #Add 7 to the argument already accumulating, or start a new argument.
+#M-8  #Add 8 to the argument already accumulating, or start a new argument.
+#M-9  #Add 9 to the argument already accumulating, or start a new argument.
+#M--  #Start a negative argument.
+#: universal-argument       #This  is  another  way  to specify an argument.
+                            #If this command is followed by one or more digits, optionally with a leading minus sign, those digits define  the  argument.
+                            #If the command is followed by digits, executing universal-argument again ends the numeric argument, but is otherwise ignored.
+                            #As a special case, if this command is immediately followed by  a character that is neither a digit or minus sign,
+                            # the argument count for the next command is multiplied by four.
+                            #The argument count is initially one, so executing this function the first time makes the argument count four, 
+                            #a second time makes the argument count sixteen, and so on.
+
+## Completing
+#TAB: complete              #Attempt to perform completion on the text before point.
+                            #Bash attempts completion treating the text as a variable (if the text begins with $), 
+                            # username (if the text begins with ~),
+                            # hostname (if the text begins with @), 
+                            # or command (including aliases and functions) in turn.
+                            #If none of these produces a match, filename completion is attempted.
+#M-?: possible-completions  #List the possible completions of the text before point.
+#M-*: insert-completions    #Insert all completions of the text before point that would have been generated by possible-completions.
+#: menu-complete            #Similar to complete, but replaces the word to be completed with a single match from the list of possible completions.
+                            #Repeated execution of menu-complete steps through the list of possible completions, inserting each match in turn.
+                            #At the end of the list of completions, the bell is rung (subject to the setting of bell-style) and the original text is restored.
+                            #An argument of n moves n positions forward in the list of  matches;
+                            # a negative argument may be used to move backward through the list.
+                            #This command is intended to be bound to TAB, but is unbound by default.
+#: delete-char-or-list      #Deletes the character under the cursor if not at the beginning or end of the line (like delete-char).
+                            #If at the end of the line, behaves identically to possible-completions.
+                            #This command is unbound by default.
+#M-/: complete-filename               #Attempt filename completion on the text before point.
+#C-x /: possible-filename-completions #List the possible completions of the text before point, treating it as a filename.
+#M-~: complete-username               #Attempt completion on the text before point, treating it as a username.
+#C-x ~: possible-username-completions #List the possible completions of the text before point, treating it as a username.
+#M-$: complete-variable               #Attempt completion on the text before point, treating it as a shell variable.
+#C-x $: possible-variable-completions #List the possible completions of the text before point, treating it as a shell variable.
+#M-@: complete-hostname               #Attempt completion on the text before point, treating it as a hostname.
+#C-x @: possible-hostname-completions #List the possible completions of the text before point, treating it as a hostname.
+#M-!: complete-command                #Attempt completion on the text before point, treating it as a command name.
+                                      #Command completion  attempts to match the text against aliases, reserved words,
+                                      # shell functions, shell builtins, and finally executable filenames, in that order.
+#C-x !: possible-command-completions  #List the possible completions of the text before point, treating it as a command name.
+#M-TAB: dynamic-complete-history      #Attempt completion on the text before point, comparing the text against lines from the history list for possible completion matches.
+#M-{: complete-into-braces            #Perform filename completion and insert the list of possible completions enclosed within braces so the list is available to the shell.
+
+## Keyboard Macros
+#C-x (: start-kbd-macro       #Begin saving the characters typed into the current keyboard macro.
+#C-x ): end-kbd-macro         #Stop saving the characters typed into the current keyboard macro and store the  definition.
+#C-x e: call-last-kbd-macro   #Re-execute the last keyboard macro defined, by making the characters in the macro appear as if typed at the keyboard.
+
+## Miscellaneous
+#do-uppercase-version (M-a, M-b, M-x, ...)  #If the metafied character x is lowercase, run the command that is bound to the corresponding uppercase character.
+#C-x C-r: re-read-init-file   #Read in the contents of the inputrc file, and incorporate any bindings or variable assignments found there.
+#C-g: abort                   #Abort  the  current editing command and ring the terminal's bell (subject to the setting of bell-style).
+#ESC: prefix-meta             #Metafy the next character typed.  ESC f is equivalent to Meta-f.
+#C-_: undo                    #Incremental undo, separately remembered for each line.
+#C-x C-u: undo
+#M-r: revert-line             #Undo  all  changes made to this line.
+                              #This is like executing the undo command enough times to return the line to its initial state.
+#M-&: tilde-expand            #Perform tilde expansion on the current word.
+#C-@: set-mark                #Set the mark to the point.
+#"\M-\020: set-mark (M-[space])  #Set the mark to the point.
+                              #If a numeric argument is supplied, the  mark  is  set  to  that position.
+#C-x C-x: exchange-point-and-mark #Swap  the  point  with the mark.
+                              #The current cursor position is set to the saved position, and the old cursor position is saved as the mark.
+#C-]: character-search        #A character is read and point is moved to the next occurrence of that character.
+                              #A  negative count searches for previous occurrences.
+#M-C-]: character-search-backward #A  character  is  read  and point is moved to the previous occurrence of that character.
+                              #A negative count searches for subsequent occurrences.
+#M-#: insert-comment          #Without a numeric argument, the value of the readline comment-begin variable is inserted atthe beginning of the current line.
+                              #If a numeric argument is supplied, this command acts as a toggle:
+                              #if the characters at the beginning of the line do not match the  value  of  comment-begin,  the  value  is inserted, 
+                              #otherwise the characters in comment-begin are deleted from the beginning of the line.
+                              #In either case, the line is accepted as if a  newline  had been  typed.
+                              #The  default  value of comment-begin causes this command to make the current line a shell comment.
+                              #If a numeric argument causes the comment character  to  be  removed, the line will be executed by the shell.
+#M-g: glob-complete-word      #The  word  before  point  is  treated as a pattern for pathname expansion, with an asterisk implicitly appended.
+                              #This pattern is used to generate a list of matching  file  names  for possible completions.
+#C-x *: glob-expand-word      #The  word  before  point  is  treated  as a pattern for pathname expansion, and the list of matching file names is inserted, replacing the word.
+                              #If a numeric argument is supplied, an asterisk is appended before pathname expansion.
+#C-x g: glob-list-expansions  #The list of expansions that would have been generated by glob-expand-word is displayed, and the line is redrawn.
+                              #If a numeric argument is supplied, an  asterisk  is  appended  before pathname expansion.
+#: dump-functions             #Print  all  of  the  functions  and their key bindings to the readline output stream.
+                              #If a numeric argument is supplied, the output is formatted in such a way that  it  can  be  made part of an inputrc file.
+#: dump-variables             #Print  all  of  the  settable  readline  variables  and their values to the readline output stream.
+                              #If a numeric argument is supplied, the output is formatted in such a way that it can be made part of an inputrc file.
+#: dump-macros                #Print  all of the readline key sequences bound to macros and the strings they output.
+                              #If a numeric argument is supplied, the output is formatted in such a way that  it  can  be  made part of an inputrc file.
+#C-x C-v: display-shell-version #Display version information about the current instance of bash.
