@@ -227,14 +227,17 @@ this script in `bin/`.
     ```
     pushd /opt
     git clone https://github.com/NetBSD/pkgsrc.git -b trunk --single-branch
+    cd pkgsrc/ && git submodule init && git submodule update
+    git clone --depth 1 git://wip.pkgsrc.org/pkgsrc-wip.git wip
     pushd /opt/pkgsrc/bootstrap
     sh bootstrap
-    export PKG_ROOT=/opt/pkg/
-    mkdir ${PKG_ROOT}{work,distfiles}
+    mkdir /opt/pkg/{work,distfiles}
     
-    # Edit mk.conf
-    #WRKOBJDIR=/opt/pkg/work
-    #DISTDIR=/opt/pkg/distfiles
+    sudo tee /opt/pkg/etc/mk.conf << EOF
+    WRKOBJDIR= /opt/pkg/work
+    DISTDIR=   /opt/pkg/distfiles
+    SU_CMD=    sudo /bin/sh -c
+    EOF
     
     popd
     ```
