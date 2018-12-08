@@ -26,15 +26,23 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 # Set scrollbar behavior: `WhenScrolling`, `Automatic`, `Always`
 defaults write NSGlobalDomain AppleShowScrollBars -string "Automatic"
 
-# Disable smart dashes
+defaults write NSGlobalDomain AppleWindowTabbingMode -string "
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+# Smart dashes
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
-# Disable smart quotes
+# Space-space periods
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool true
+# Smart quotes
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-# Disable auto-correct
+# Auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+# Text completion
+defaults write NSGlobalDomain NSAutomaticTextCompletionEnabled -bool true
 
 # Disable opening and closing window animations
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+
+defaults write NSGlobalDomain NSCloseAlwaysConfirmsChanges -bool true
 
 # Disable automatic termination of inactive apps
 defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
@@ -46,7 +54,11 @@ defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 
-# Set sidebar icon size to small
+defaults write NSGlobalDomain NSPreferredWebServices '{NSWebServicesProviderWebSearch = {NSDefaultDisplayName = DuckDuckGo; NSProviderIdentifier = "com.duckduckgo"}}';
+
+defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool true
+
+# Set sidebar icon size: {1:small; 2:medium; 3:large}
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 1 
 
 # Display ASCII control characters using caret notation in standard text views
@@ -63,11 +75,16 @@ defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 # Menu bar: show battery percentage
 defaults write com.apple.menuextra.battery ShowPercent YES
 
-defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # Disable audio feedback when volume is changed
-defaults write com.apple.sound.beep.feedback -bool false
+defaults write NSGlobalDomain com.apple.sound.beep.feedback -bool true
+defaults write NSGlobalDomain com.apple.sound.beep.flash -bool false
+defaults write NSGlobalDomain com.apple.springing.delay -float "0.5"
+defaults write NSGlobalDomain com.apple.springing.enabled -bool true
+defaults write NSGlobalDomain com.apple.swipescrolldirection -int 1
+defaults write NSGlobalDomain com.apple.trackpad.forceClick -bool true
+
 
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input
   # Trackpad: enable tap to click for this user and for the login screen
