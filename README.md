@@ -222,6 +222,21 @@ this script in `bin/`.
     mv python-2.7.15-macosx10.9.pkg ~/.Trash
     ```
 
+1.Update Ruby
+
+    ```
+    # Install mpapis public key (might need `gpg2` and or `sudo`)
+    gpg --keyserver hkp://pgp.mit.edu --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+    # Download the installer
+    curl -LO "https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer"
+    curl -LO "https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer.asc"
+    # Verify the installer signature (might need `gpg2`), and if it validates...
+    gpg --verify rvm-installer.asc &&
+    # Run the installer
+    sudo bash rvm-installer stable --autolibs=read-fail
+    sudo dseditgroup -o edit -a ${USER} -t user rvm
+    ```
+
 1. Install pkgsrc
 
     ```
