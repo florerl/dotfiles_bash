@@ -8,17 +8,28 @@ defaults write NSGlobalDomain AppleFontSmoothing -int 2
   # Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
+defaults write NSGlobalDomain AppleAccentColor -int 5;
+defaults write NSGlobalDomain AppleActionOnDoubleClick -string Minimize;
+defaults write NSGlobalDomain AppleAntiAliasingThreshold -int 4;
+defaults write NSGlobalDomain AppleAquaColorVariant -int 1;
+defaults write NSGlobalDomain AppleHighlightColor -string "0.968627 0.831373 1.000000 Purple";
+defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+defaults write NSGlobalDomain AppleInterfaceStyle -string Dark
+
   # Set language and text formats
 defaults write NSGlobalDomain AppleLanguages -array "en" "us"
 defaults write NSGlobalDomain AppleLocale -string "en_US@currency=USD"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Inches"
 defaults write NSGlobalDomain AppleMetricUnits -bool false
+defaults write NSGlobalDomain AppleMiniaturizeOnDoubleClick -bool false
 
 # Keep press-and-hold for keys in favor of key repeat.
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool true
 # Set a blazingly fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
+defaults write NSGlobalDomain AppleScrollerPagingBehavior -bool false
 
 # Finder: show all filename extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
