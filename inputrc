@@ -17,8 +17,13 @@ set visible-stats on
   # Readline used by Bash 4.)
 set skip-completed-text on
   # Allow UTF-8 input and output, instead of showing stuff like $'\0123\0456'
+  # don't strip characters to 7 bits when reading
 set input-meta on
+  # display characters with the eighth bit set directly
+  # rather than as meta-prefixed characters
 set output-meta on
+  # allow iso-latin1 characters to be inserted rather
+  # than converted to prefix-meta sequences
 set convert-meta off
 
 
