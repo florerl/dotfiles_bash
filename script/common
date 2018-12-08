@@ -1,0 +1,57 @@
+
+
+# Big Nerd Ranch iOS/Mac Machine Bootstrap Script
+# Heavily based on thoughtbot's laptop script https://github.com/thoughtbot/laptop/blob/master/mac
+
+fancy_echo() {
+  local fmt="$1"; shift
+
+  # shellcheck disable=SC2059
+  printf "\n$fmt\n" "$@"
+}
+
+shellrc_path() {
+  local path current_shell
+
+  current_shell="$( basename "$SHELL" )"
+
+  if [[ $current_shell = "zsh" ]]; then
+    if [[ -w "$HOME/.zshrc.local" ]]; then
+      path="$HOME/.zshrc.local"
+    else
+      path="$HOME/.zshrc"
+    fi
+  elif [[ "$current_shell" = "bash" ]]; then
+    path="$HOME/.bash_profile"
+  else
+    echo "/dev/stdout"
+    return 1
+  fi
+
+  if [[ ! -e "$path" ]]; then
+      touch "$path"
+  fi
+
+  if [[ ! -w "$path" ]]; then
+    fancy_echo "Cannot write to $path"
+    echo "/dev/stdout"
+    return 1
+  fi
+
+  echo "$path"
+}
+
+# die MESSAGE: logs MESSAGE and then exits non-zero
+#
+# Example:
+#
+#     writable "$directory" || die "not writable: $directory"
+die() {
+    local message
+
+    # ${FUNCNAME[1]} evaluates to the name of the calling function.
+    message="${FUNCNAME[1]}: fatal error: *** $1"
+
+    echo "$message" 1>&2
+    exit 1
+}
