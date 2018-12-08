@@ -3,6 +3,7 @@
 #tap "homebrew/core"
 
 #brew "bats"
+#brew "carthage"
 #brew "coreutils"
 #brew "diff-so-fancy"
 #brew "dockutil"
