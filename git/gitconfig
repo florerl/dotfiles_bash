@@ -45,8 +45,15 @@
 
 [include]       # Local/private config goes in the include
         path = ~/.gitconfig.local
+
+[core]
+        editor = vim
+        excludesfile = ~/.gitignore
+	attributesfile = ~/.gitattributes
+
 [hub]
         protocol = https
+
 [alias]
         # 1. To avoid confusion and troubles with script usage, 
         #       aliases that hide existing Git commands are ignored
@@ -59,72 +66,135 @@
         
 	# List aliases
         aliases = config --get-regexp alias
-        co = checkout
-        
-	"promote = !$ZSH/bin/git-promote
-        "wtf     = !$ZSH/bin/git-wtf
-        
-	rank-contributors = !$ZSH/bin/git-rank-contributors
-        count   = !git shortlog -sn
-	undo = reset --hard HEAD
 	amend = commit --amend -a
+        co = checkout
+	contrib = shortlog --summary --numbered
+        count   = !git shortlog -sn        
 	graph = log --graph
 	ignore = update-index --asume-unchanged
-	unignore = update-index --no-assume-unchanged
 	ignored = !git ls-files -v | grep "^[[:lower:]]"
-	sweep = !git fsck && git gc && git remote update --prune && git stash clear
-	update = !git checkout master && git checkout - && git merge master
+	"promote = !$ZSH/bin/git-promote
+	rank-contributors = !$ZSH/bin/git-rank-contributors
 	recent = !git branch --sort=-committerdate | head
+	show-ignored = "! git clean -ndX | perl -pe 's/Would remove/Ignored:/'"
+	sweep = !git fsck && git gc && git remote update --prune && git stash clear
+	undo = reset --hard HEAD
+	unignore = update-index --no-assume-unchanged
+	unstage = reset --hard HEAD
+	update = !git checkout master && git checkout - && git merge master
+        "wtf     = !$ZSH/bin/git-wtf
+
+[apply]
+        whitespace = nowarn
+
 [branch "master"]
 	remote = origin
 	merge = refs/head/master
+	
 [color]
         diff = auto
 	interactive = auto
         status = auto
         branch = auto
         ui = true
-[core]
-        editor = vim
-        excludesfile = ~/.gitignore
-	attributesfile = ~/.gitattributes
-[apply]
-        whitespace = nowarn
-[merge]
-#	tool = vimdiff
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
 
-[mergetool]
-        keepBackup = false
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+	
+[credential]
+	helper = osxkeychain
+	
 [diff]
 	algorithm = patience
+	renames = copies
+	indentHeuristic = true
+	"tool = Kaleidoscope
+	"tool = FileMerge
 [difftool]
         prompt = false
+
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[difftool "sourcetree"]
+	cmd = ksdiff -w \"$LOCAL\" \"$REMOTE\"
+	path =
+
+[fetch]
+	prune = true
+
 [filter "media"]
 	required = true
 	clean = git media clean %f
 	smudge = git media smudge %f
+	
 [filter "hawser"]
 	required = true
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
+	
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+	
 [format]
 	pretty = %C(yellow)%h%C(white)%d%Creset %s %C(cyan)(%cr) %C(bold blue)<%an>%Creset
+
+[grep]
+	lineNumber = true
+
 [help]
         autocorrect = 1
+	
+[include]
+	path = ~/.gitconfig_local
+	
+[log]
+	abbrevCommit = true
+	decorate = true
+	
+[merge]
+	"tool = vimdiff
+	"tool = Kaleidoscope
+	conflictstyle = diff3
+	defaultToUpstream = true
+
+[mergetool]
+        keepBackup = false
+
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+
+[mergetool "sourcetree"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+
 [push]
         # See `git help config` (search for push.default)
         # for more information on different options of the below setting.
         #
         # Setting to git 2.0 default to suppress warning message
         default = simple
-[include]
-	path = ~/.gitconfig_local
-[log]
-	abbrevCommit = true
-	decorate = true
+	followTags = true
 
