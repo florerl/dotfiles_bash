@@ -1,4 +1,7 @@
-  # Trackpad: map bottom right corner to right-click
+## Trackpad, mouse, keyboard, Bluetooth accessories, et c
+# Trackpad: enable tap to click for this user and for the login screen
+#defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+# Trackpad: map bottom right corner to right-click
 # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
 # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
 
