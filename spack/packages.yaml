@@ -1,0 +1,28 @@
+packages:
+    all:
+        variants: build_type=Release
+        providers:
+            blas: [netlib-lapack]
+            lapack: [netlib-lapack]
+    openssl:
+        paths:
+            openssl: /usr
+        buildable: False
+    cmake:
+        paths:
+            cmake@3.13.1: /Applications/CMake.app/Contents
+        buildable: False
+    m4:
+        paths:
+            m4@1.4.6: /usr
+        buildable: False
+    python:
+        paths:
+            python@2.7.15: /usr/local
+            python@3.7.1: /usr/local
+        buildable: False
+    libtool:
+        paths:
+            libtool: /usr
+        buildable: False
+
