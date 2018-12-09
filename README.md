@@ -272,8 +272,11 @@ this script in `bin/`.
     pushd /opt
     git clone https://github.com/spack/spack.git
     export SPACK_ROOT=/opt/spack
-    export PATH=$SPACK_ROOT/bin:$PATH
-    source $SPACK_ROOT/share/spack/setup-env.sh
+    sudo tee /etc/paths.d/spack << EOF
+    /opt/spack/bin
+    EOF
+    #source $SPACK_ROOT/share/spack/setup-env.sh
+    
     spack compiler find
     spack gpg init
     popd
