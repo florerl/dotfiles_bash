@@ -1,0 +1,4 @@
+#!/bin/sh
+
+#TODO: error checking...
+pkgutil --check-signature "$1" && sudo installer -package "$1" -target / || echo "Install failed: " "${1}"
