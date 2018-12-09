@@ -237,6 +237,14 @@ this script in `bin/`.
     sudo dseditgroup -o edit -a ${USER} -t user rvm
     ```
 
+1. Install NodeJS
+
+    ```
+    VERSION=$(curl -sSL https://nodejs.org/dist/latest/ | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')
+    curl "https://nodejs.org/dist/latest/node-${VERSION}.pkg" > "$HOME/Downloads/node-latest.pkg" \ 
+    && sudo installer -store -pkg "$HOME/Downloads/node-latest.pkg" -target "/"
+
+
 1. Install pkgsrc
 
     ```
@@ -283,16 +291,16 @@ this script in `bin/`.
 ```
 function install_pkg {
     #TODO: error checking...
-    pkgutil --check-signature $1 && \
-    sudo installer -package $1 -target / || \
-    echo "Install failed: " "${1}"
+    pkgutil --check-signature $1 \ 
+    && sudo installer -package $1 -target / \
+    || echo "Install failed: " "${1}"
 }
 
 curl -L -o "jre-8u191-macosx-x64.dmg" "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=235718_2787e4a523244c269598db4e85c51e0c"
-hdiutil attach jre-8u191-macosx-x64.dmg
-open /Volumes/Java\ 8\ Update\ 191/Java\ 8\ Update\ 191.app/
-read -p "Press Enter (Return) when complete"
-hdiutil detach /Volumes/Java\ 8\ Update\ 191/
+hdiutil attach jre-8u191-macosx-x64.dmg \
+&& open /Volumes/Java\ 8\ Update\ 191/Java\ 8\ Update\ 191.app/ \
+&& read -p "Press Enter (Return) when complete" \
+&& hdiutil detach /Volumes/Java\ 8\ Update\ 191/
 mv jre-8u191-macosx-x64.dmg ~/.Trash
 
 curl -LO "https://download.oracle.com/otn-pub/java/jdk/11.0.1+13/90cf5d8f270a4347a95050320eef3fb7/jdk-11.0.1_osx-x64_bin.dmg"
