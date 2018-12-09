@@ -1,4 +1,6 @@
 #!/bin/sh
+# Check the signature of a .pkg then install if signature "valid"
+# or inform the user that the install failed.
 
 #TODO: error checking...
 pkgutil --check-signature "$1" && sudo installer -package "$1" -target / || echo "Install failed: " "${1}"
