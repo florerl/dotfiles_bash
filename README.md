@@ -222,7 +222,7 @@ this script in `bin/`.
     mv python-2.7.15-macosx10.9.pkg ~/.Trash
     ```
 
-1.Update Ruby
+1. Update Ruby
 
     ```
     # Install mpapis public key (might need `gpg2` and or `sudo`)
