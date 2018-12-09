@@ -192,6 +192,19 @@ this script in `bin/`.
 
     source /opt/intel/bin/compilervars.sh intel64
 
+1. Install CMake
+    ```
+    curl -LO "https://github.com/Kitware/CMake/releases/download/v3.13.1/cmake-3.13.1-Darwin-x86_64.dmg"
+    hdiutil attach cmake-3.13.1-Darwin-x86_64.dmg
+    cp -R "/Volumes/cmake-3.13.1-Darwin-x86_64/CMake.app" /Applications
+    hdiutil detach /Volumes/cmake-3.13.1-Darwin-x86_64
+    mv cmake-3.13.1-Darwin-x86_64.dmg ~/.Trash
+    sudo tee /etc/paths.d/cmake << EOF
+    /Applications/CMake.app/Contents/bin
+    EOF
+    eval `/usr/libexec/path_helper -s`
+
+
 1. Install Golang
 
     ```
