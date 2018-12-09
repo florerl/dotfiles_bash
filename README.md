@@ -275,6 +275,7 @@ this script in `bin/`.
     sudo tee /etc/paths.d/spack << EOF
     /opt/spack/bin
     EOF
+    eval `/usr/libexec/path_helper -s`
     #source $SPACK_ROOT/share/spack/setup-env.sh
     
     spack compiler find
