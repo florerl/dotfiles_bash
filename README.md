@@ -155,12 +155,12 @@ this script in `bin/`.
     pushd /opt/intel/
     curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14903/m_pythoni3_p_2019.1.056.tar.gz"
     tar -xvzf m_pythoni3_p_2019.1.056.tar.gz
-    mv m_pythoni3_p_2019.1.056.tar.gz ~/.Trash
+    mv m_pythoni3_p_2019.1.056.tar.gz $HOME/.Trash
     bash intelpython3 setup_intel_python.sh
     
     curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14903/m_pythoni2_p_2019.1.056.tar.gz"
     tar -xvzf m_pythoni2_p_2019.1.056.tar.gz
-    mv m_pythoni2_p_2019.1.056.tar.gz ~/.Trash
+    mv m_pythoni2_p_2019.1.056.tar.gz $HOME/.Trash
     bash intelpython2 setup_intel_python.sh
     popd
     ```
@@ -180,14 +180,14 @@ this script in `bin/`.
     open /Volumes/m_ccompxe_2019.1.034/m_ccompxe_2019.1.034.app/
     read "Press Return (Enter) to continue"
     hdiutil detach /Volumes/m_ccompxe_2019.1.034
-    mv m_ccompxe_2019.1.0.34.dmg ~/.Trash
+    mv m_ccompxe_2019.1.0.34.dmg $HOME/.Trash
     
     curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14828/m_fcompxe_2019.1.034.dmg"
     hdiutil attach m_fcompxe_2019.1.034.dmg
     open /Volumes/m_fcompxe_2019.1.034/m_fcompxe_2019.1.034.app/
     read "Press Return (Enter) to continue"
     hdiutil detach /Volumes/m_fcompxe_2019.1.034
-    mv m_fcompxe_2019.1.0.34.dmg ~/.Trash
+    mv m_fcompxe_2019.1.0.34.dmg $HOME/.Trash
 
 
     source /opt/intel/bin/compilervars.sh intel64
@@ -198,7 +198,7 @@ this script in `bin/`.
     hdiutil attach cmake-3.13.1-Darwin-x86_64.dmg
     cp -R "/Volumes/cmake-3.13.1-Darwin-x86_64/CMake.app" /Applications
     hdiutil detach /Volumes/cmake-3.13.1-Darwin-x86_64
-    mv cmake-3.13.1-Darwin-x86_64.dmg ~/.Trash
+    mv cmake-3.13.1-Darwin-x86_64.dmg $HOME/.Trash
     sudo tee /etc/paths.d/cmake << EOF
     /Applications/CMake.app/Contents/bin
     EOF
@@ -210,7 +210,7 @@ this script in `bin/`.
     ```
     curl -LO "https://dl.google.com/go/go1.11.2.darwin-amd64.pkg"
     install_pkg go1.11.2.darwin-arm64.pkg
-    mv go1.11.2.darwin-arm64.pkg ~/.Trash
+    mv go1.11.2.darwin-arm64.pkg $HOME/.Trash
     ```
 
 1. Install GPGtools
@@ -220,19 +220,30 @@ this script in `bin/`.
     hdiutil attach GPG_Suite-2018.5.dmg
     install_pkg /Volumes/GPG\ Suite/Install.pkg
     hdiutil detach /Volumes/GPG\ Suite/
-    mv GPG_Suite-2018.5.dmg ~/.Trash
+    mv GPG_Suite-2018.5.dmg $HOME/.Trash
     ```
+
+1. Install Java
+    ```
+    # Open in Safari to accept OTNLA
+    open "https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html" \
+    && read -p "Press Enter (Return) when complete" \
+    && hdiutil attach jdk-11.0.1_osx-x64_bin.dmg \
+    && install_pkg "/Volumes/JDK 11.0.1/JDK 11.0.1.pkg" \
+    && hdiutil detach "/Volumes/JDK 11.0.1/"
+    mv jdk-11.0.1_osx-x64_bin.dmg $HOME/.Trash
+    
 
 1. Update Python
 
     ```
     curl -LO "https://www.python.org/ftp/python/3.7.1/python-3.7.1-macosx10.9.pkg"
     install_pkg python-3.7.1-macosx10.9.pkg
-    mv python-3.7.1-macosx10.9.pkg ~/.Trash
+    mv python-3.7.1-macosx10.9.pkg $HOME/.Trash
 
     curl -LO "https://www.python.org/ftp/python/2.7.15/python-2.7.15-macosx10.9.pkg"
     install_pkg python-2.7.15-macosx10.9.pkg
-    mv python-2.7.15-macosx10.9.pkg ~/.Trash
+    mv python-2.7.15-macosx10.9.pkg $HOME/.Trash
     ```
 
 1. Update Ruby
@@ -308,41 +319,39 @@ this script in `bin/`.
 ```
 function install_pkg {
     #TODO: error checking...
-    pkgutil --check-signature $1 \ 
-    && sudo installer -package $1 -target / \
-    || echo "Install failed: " "${1}"
+    pkgutil --check-signature "$1" && sudo installer -package "$1" -target / || echo "Install failed: " "${1}"
 }
 
 curl -L -o "jre-8u191-macosx-x64.dmg" "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=235718_2787e4a523244c269598db4e85c51e0c"
 hdiutil attach jre-8u191-macosx-x64.dmg \
-&& open /Volumes/Java\ 8\ Update\ 191/Java\ 8\ Update\ 191.app/ \
-&& read -p "Press Enter (Return) when complete" \
+&& open /Volumes/Java\ 8\ Update\ 191/Java\ 8\ Update\ 191.app/
+&& read -p "Press Enter (Return) when complete" /
 && hdiutil detach /Volumes/Java\ 8\ Update\ 191/
-mv jre-8u191-macosx-x64.dmg ~/.Trash
+mv jre-8u191-macosx-x64.dmg $HOME/.Trash
 
 curl -LO "https://download.oracle.com/otn-pub/java/jdk/11.0.1+13/90cf5d8f270a4347a95050320eef3fb7/jdk-11.0.1_osx-x64_bin.dmg"
 hdiutil attach jdk-11.0.1_osx-x64_bin.dmg
 install_pkg /Volumes/JDK\ 11.0.1/JDK\ 11.0.1.pkg
 hdiutil detach /Volumes/JDK\ 11.0.1/
-mv jdk-11.0.1_osx-x64_bin.dmg ~/.Trash
+mv jdk-11.0.1_osx-x64_bin.dmg $HOME/.Trash
 
 curl -L -o Visual_Paradigm.dmg "https://www.visual-paradigm.com/download/community.jsp?platform=macosx&arch=jre"
 hdiutil attach Visual_Paradigm.dmg
 cp "/Volumes/Visual Paradigm CE/Visual Paradigm.app" /Applications/
 hdiutil detach "/Volumes/Visual Paradigm CE"
-mv Visual_Paradigm.dmg ~/.Trash
+mv Visual_Paradigm.dmg $HOME/.Trash
 
 curl -LO "https://github.com/onivim/oni/releases/download/v0.3.6/Oni-0.3.6-osx.dmg"
 hdiutil attach Oni-0.3.6-osx.dmg
 cp -R /Volumes/Oni\ 0.3.6/Oni.app /Applications
 hdiutil detach /Volumes/Oni\ 0.3.6/
-mv Oni-0.3.6-osx.dmg ~/.Trash
+mv Oni-0.3.6-osx.dmg $HOME/.Trash
 
 curl -LO "https://officecdn-microsoft-com.akamaized.net/pr/C1297A47-86C4-4C1F-97FA-950631F94777/OfficeMac/Microsoft_Office_16.19.18110915_Installer.pkg"
 install_pkg Microsoft_Office_16.19.18110915_Installer.pkg
-mv Microsoft_Office_16.19.18110915_Installer.pkg ~/.Trash
+mv Microsoft_Office_16.19.18110915_Installer.pkg $HOME/.Trash
 
 curl -LO "https://download.microsoft.com/download/D/0/5/D055DA17-C7B8-4257-89A1-78E7BBE3833F/SkypeForBusinessInstaller-16.23.0.64.pkg"
 install_pkg SkypeForBusinessInstaller-16.23.0.64.pkg
-mv SkypeForBusinessInstaller-16.23.0.64.pkg ~/.Trash
+mv SkypeForBusinessInstaller-16.23.0.64.pkg $HOME/.Trash
 ```
