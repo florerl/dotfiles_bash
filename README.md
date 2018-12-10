@@ -130,6 +130,7 @@ this script in `bin/`.
    ```
    PLATFORM="macOS_10.14"
    xcode-select --install
+   sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
    sudo xcodebuild -license accept
    install_pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_${PLATFORM}.pkg 
    unset PLATFORM
@@ -294,6 +295,7 @@ this script in `bin/`.
     cd /opt/pkgsrc/bootstrap
     sh bootstrap
     mkdir /opt/pkg/{work,distfiles}
+    pkg_admin -K /opt/pkg/pkgdb fetch-pkg-vulnerabilities
     
     sudo tee /opt/pkg/etc/mk.conf << EOF
     WRKOBJDIR= /opt/pkg/work
