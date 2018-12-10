@@ -146,6 +146,16 @@ this script in `bin/`.
     sudo chmod -R g+w /opt/
     ```
 
+1. Install GPGtools
+
+    ```
+    curl -LO "https://releases.gpgtools.org/GPG_Suite-2018.5.dmg"
+    hdiutil attach GPG_Suite-2018.5.dmg
+    install_pkg /Volumes/GPG\ Suite/Install.pkg
+    hdiutil detach /Volumes/GPG\ Suite/
+    mv GPG_Suite-2018.5.dmg $HOME/.Trash
+    ```
+
 1. Install Intel Compilers
 
     - Log in: https://software.intel.com/en-us/user/login?destination=node/790487
@@ -194,36 +204,37 @@ this script in `bin/`.
 
 1. Install CMake
     ```
-    curl -LO "https://github.com/Kitware/CMake/releases/download/v3.13.1/cmake-3.13.1-Darwin-x86_64.dmg"
-    hdiutil attach cmake-3.13.1-Darwin-x86_64.dmg
-    cp -R "/Volumes/cmake-3.13.1-Darwin-x86_64/CMake.app" /Applications
-    hdiutil detach /Volumes/cmake-3.13.1-Darwin-x86_64
-    mv cmake-3.13.1-Darwin-x86_64.dmg $HOME/.Trash
+    #VERSION=$(curl "https://cmake.org/download/" | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')
+    VERSION=${VERSION:-"3.13.1"}
+    PLATFORM="Darwin-x86_64"
+    curl -L -o "cmake.dmg" "https://github.com/Kitware/CMake/releases/download/v${VERSION}/cmake-${VERSION}-${PLATFORM}.dmg"
+    hdiutil attach cmake.dmg
+    cp -R "/Volumes/cmake-${VERSION}-${PLATFORM}/CMake.app" /Applications
+    hdiutil detach /Volumes/cmake-${VERSION}-${PLATFORM}
+    mv cmake.dmg $HOME/.Trash
     sudo tee /etc/paths.d/cmake << EOF
     /Applications/CMake.app/Contents/bin
     EOF
+    unset VERSION PLATFORM
     eval `/usr/libexec/path_helper -s`
 
 
 1. Install Golang
 
     ```
+    #VERSION=$(curl "https://golang.org/dl/" | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')
+    VERSION=${VERSION:-"1.11.2"}
+    PLATFORM="darwin-amd64"
     curl -LO "https://dl.google.com/go/go1.11.2.darwin-amd64.pkg"
     install_pkg go1.11.2.darwin-arm64.pkg
     mv go1.11.2.darwin-arm64.pkg $HOME/.Trash
-    ```
+    unset VERSION PLATFORM
+    eval `/usr/libexec/path_helper -s`
 
-1. Install GPGtools
-
-    ```
-    curl -LO "https://releases.gpgtools.org/GPG_Suite-2018.5.dmg"
-    hdiutil attach GPG_Suite-2018.5.dmg
-    install_pkg /Volumes/GPG\ Suite/Install.pkg
-    hdiutil detach /Volumes/GPG\ Suite/
-    mv GPG_Suite-2018.5.dmg $HOME/.Trash
     ```
 
 1. Install Java
+
     ```
     # Open in Safari to accept OTNLA
     open "https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html" \
@@ -231,19 +242,23 @@ this script in `bin/`.
     && hdiutil attach jdk-11.0.1_osx-x64_bin.dmg \
     && install_pkg "/Volumes/JDK 11.0.1/JDK 11.0.1.pkg" \
     && hdiutil detach "/Volumes/JDK 11.0.1/"
-    mv jdk-11.0.1_osx-x64_bin.dmg $HOME/.Trash
-    
+    mv jdk-11.0.1_osx-x64_bin.dmg ${HOME}/.Trash
+    unset VERSION PLATFORM
+    eval `/usr/libexec/path_helper -s`
+    ```
 
 1. Update Python
 
     ```
     curl -LO "https://www.python.org/ftp/python/3.7.1/python-3.7.1-macosx10.9.pkg"
     install_pkg python-3.7.1-macosx10.9.pkg
-    mv python-3.7.1-macosx10.9.pkg $HOME/.Trash
+    mv python-3.7.1-macosx10.9.pkg ${HOME}/.Trash
 
     curl -LO "https://www.python.org/ftp/python/2.7.15/python-2.7.15-macosx10.9.pkg"
     install_pkg python-2.7.15-macosx10.9.pkg
-    mv python-2.7.15-macosx10.9.pkg $HOME/.Trash
+    mv python-2.7.15-macosx10.9.pkg ${HOME}/.Trash
+    unset VERSION PLATFORM
+    eval `/usr/libexec/path_helper -s`
     ```
 
 1. Update Ruby
@@ -259,15 +274,20 @@ this script in `bin/`.
     # Run the installer
     sudo bash rvm-installer stable --autolibs=read-fail
     sudo dseditgroup -o edit -a ${USER} -t user rvm
+    unset VERSION PLATFORM
+    eval `/usr/libexec/path_helper -s`
     ```
 
 1. Install NodeJS
 
     ```
     VERSION=$(curl -sSL https://nodejs.org/dist/latest/ | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')
-    curl "https://nodejs.org/dist/latest/node-${VERSION}.pkg" > "$HOME/Downloads/node-latest.pkg" \ 
-    && sudo installer -store -pkg "$HOME/Downloads/node-latest.pkg" -target "/"
-
+    curl "https://nodejs.org/dist/latest/node-${VERSION}.pkg" > "$HOME/Downloads/node-latest.pkg" \ &&
+    install_pkg "node-latest.pkg"
+    mv "node-latest.pkg" ${HOME}/.Trash
+    unset VERSION PLATFORM
+    eval `/usr/libexec/path_helper -s`
+    ```
 
 1. Install pkgsrc
 
@@ -310,8 +330,12 @@ this script in `bin/`.
 1. Install Macports?
     
     ```
-    curl -LO https://github.com/macports/macports-base/releases/download/v2.5.4/MacPorts-2.5.4-10.14-Mojave.pkg
-    
+    VERSION="2.5.4"
+    PLATFORM="10.14-Mojave"
+    curl -L -o "MacPorts.pkg" "https://github.com/macports/macports-base/releases/download/v${VERSION}/MacPorts-${VERSION}-${PLATFORM}.pkg"
+    install_pkg MacPorts.pkg
+    trash MacPorts.pkg
+    unset VERSION PLATFORM
 
 1. ...
 
@@ -322,36 +346,41 @@ function install_pkg {
     pkgutil --check-signature "$1" && sudo installer -package "$1" -target / || echo "Install failed: " "${1}"
 }
 
+function trash {
+  #TODO: error checking...
+  mv "$1" ${HOME}/.Trash
+}
+  
 curl -L -o "jre-8u191-macosx-x64.dmg" "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=235718_2787e4a523244c269598db4e85c51e0c"
 hdiutil attach jre-8u191-macosx-x64.dmg \
 && open /Volumes/Java\ 8\ Update\ 191/Java\ 8\ Update\ 191.app/
 && read -p "Press Enter (Return) when complete" /
 && hdiutil detach /Volumes/Java\ 8\ Update\ 191/
-mv jre-8u191-macosx-x64.dmg $HOME/.Trash
+trash jre-8u191-macosx-x64.dmg
 
 curl -LO "https://download.oracle.com/otn-pub/java/jdk/11.0.1+13/90cf5d8f270a4347a95050320eef3fb7/jdk-11.0.1_osx-x64_bin.dmg"
 hdiutil attach jdk-11.0.1_osx-x64_bin.dmg
 install_pkg /Volumes/JDK\ 11.0.1/JDK\ 11.0.1.pkg
 hdiutil detach /Volumes/JDK\ 11.0.1/
-mv jdk-11.0.1_osx-x64_bin.dmg $HOME/.Trash
+trash jdk-11.0.1_osx-x64_bin.dmg
 
 curl -L -o Visual_Paradigm.dmg "https://www.visual-paradigm.com/download/community.jsp?platform=macosx&arch=jre"
 hdiutil attach Visual_Paradigm.dmg
 cp "/Volumes/Visual Paradigm CE/Visual Paradigm.app" /Applications/
 hdiutil detach "/Volumes/Visual Paradigm CE"
-mv Visual_Paradigm.dmg $HOME/.Trash
+trash Visual_Paradigm.dmg 
 
 curl -LO "https://github.com/onivim/oni/releases/download/v0.3.6/Oni-0.3.6-osx.dmg"
 hdiutil attach Oni-0.3.6-osx.dmg
 cp -R /Volumes/Oni\ 0.3.6/Oni.app /Applications
 hdiutil detach /Volumes/Oni\ 0.3.6/
-mv Oni-0.3.6-osx.dmg $HOME/.Trash
+trash Oni-0.3.6-osx.dmg
 
 curl -LO "https://officecdn-microsoft-com.akamaized.net/pr/C1297A47-86C4-4C1F-97FA-950631F94777/OfficeMac/Microsoft_Office_16.19.18110915_Installer.pkg"
 install_pkg Microsoft_Office_16.19.18110915_Installer.pkg
-mv Microsoft_Office_16.19.18110915_Installer.pkg $HOME/.Trash
+trash Microsoft_Office_16.19.18110915_Installer.pkg
 
 curl -LO "https://download.microsoft.com/download/D/0/5/D055DA17-C7B8-4257-89A1-78E7BBE3833F/SkypeForBusinessInstaller-16.23.0.64.pkg"
 install_pkg SkypeForBusinessInstaller-16.23.0.64.pkg
-mv SkypeForBusinessInstaller-16.23.0.64.pkg $HOME/.Trash
+trash SkypeForBusinessInstaller-16.23.0.64.pkg
 ```
