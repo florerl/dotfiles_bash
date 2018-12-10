@@ -168,50 +168,29 @@ this script in `bin/`.
     - Log in: https://software.intel.com/en-us/user/login?destination=node/790487
 
     ```
-    open "https://software.intel.com/en-us/user/login?destination=node/790487"
-    VERSION="2018.5"
+    open "https://software.intel.com/en-us/user/login"
+    read "Press Return (Enter) to continue"
+    VERSION="2019.1.0.34"
+    VERSIONF="2019.1.034"
+    CVAL="14826"
+    FVAL="14828"
     PLATFORM=""
-    mkdir /opt/intel/
-    pushd /opt/intel/
-    curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14903/m_pythoni3_p_2019.1.056.tar.gz"
-    tar -xvzf m_pythoni3_p_2019.1.056.tar.gz
-    mv m_pythoni3_p_2019.1.056.tar.gz $HOME/.Trash
-    bash intelpython3 setup_intel_python.sh
-    
-    curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14903/m_pythoni2_p_2019.1.056.tar.gz"
-    tar -xvzf m_pythoni2_p_2019.1.056.tar.gz
-    mv m_pythoni2_p_2019.1.056.tar.gz $HOME/.Trash
-    bash intelpython2 setup_intel_python.sh
-    popd
-    ```
-    
-    - Add to logon script:
-    
-    ```
-    source /opt/intel/intelpython3/bin/activate root
-    source /opt/intel/intelpython3/bin/activate root
-    ```
-    
-    - Continue install
-    
-    ```
-    curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14826/m_ccompxe_2019.1.034.dmg"
-    hdiutil attach m_ccompxe_2019.1.0.34.dmg
-    open /Volumes/m_ccompxe_2019.1.034/m_ccompxe_2019.1.034.app/
+    curl -L -o "m_ccompxe.dmg" "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/${CVAL}/m_ccompxe_${VERSION}.dmg"
+    hdiutil attach m_ccompxe.dmg
+    open /Volumes/m_ccompxe_${VERSIONF}/m_ccompxe_${VERSIONF}.app/
     read "Press Return (Enter) to continue"
-    hdiutil detach /Volumes/m_ccompxe_2019.1.034
-    mv m_ccompxe_2019.1.0.34.dmg $HOME/.Trash
+    hdiutil detach /Volumes/m_ccompxe_${VERSIONF}
+    trash m_ccompxe.dmg
     
-    curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14828/m_fcompxe_2019.1.034.dmg"
-    hdiutil attach m_fcompxe_2019.1.034.dmg
-    open /Volumes/m_fcompxe_2019.1.034/m_fcompxe_2019.1.034.app/
+    curl -L -o "m_fcompxe.dmg" "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/${FVAL}/m_fcompxe_${VERSION}.dmg"
+    hdiutil attach m_fcompxe.dmg
+    open /Volumes/m_fcompxe_${VERSIONF}/m_fcompxe_${VERSIONF}.app/
     read "Press Return (Enter) to continue"
-    hdiutil detach /Volumes/m_fcompxe_2019.1.034
-    mv m_fcompxe_2019.1.0.34.dmg $HOME/.Trash
-
+    hdiutil detach /Volumes/m_fcompxe_${VERSIONF}
+    trash m_fcompxe.dmg
 
     source /opt/intel/bin/compilervars.sh intel64
-    unset VERSION PLATFORM
+    unset VERSION VERSIONF CVAL FVAL PLATFORM
     eval `/usr/libexec/path_helper -s`
     ```
 
@@ -224,10 +203,13 @@ this script in `bin/`.
     hdiutil attach cmake.dmg
     cp -R "/Volumes/cmake-${VERSION}-${PLATFORM}/CMake.app" /Applications
     hdiutil detach /Volumes/cmake-${VERSION}-${PLATFORM}
-    mv cmake.dmg $HOME/.Trash
+    trash cmake.dmg
     sudo tee /etc/paths.d/cmake << EOF
     /Applications/CMake.app/Contents/bin
     EOF
+    unset VERSION PLATFORM
+    eval `/usr/libexec/path_helper -s`
+
     ```
 
 1. Install Golang
@@ -236,9 +218,9 @@ this script in `bin/`.
     #VERSION=$(curl "https://golang.org/dl/" | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')
     VERSION=${VERSION:-"1.11.2"}
     PLATFORM="darwin-amd64"
-    curl -LO "https://dl.google.com/go/go1.11.2.darwin-amd64.pkg"
-    install_pkg go1.11.2.darwin-arm64.pkg
-    mv go1.11.2.darwin-arm64.pkg $HOME/.Trash
+    curl -L -o go.pkg "https://dl.google.com/go/go${VERSION}.${PLATFORM}.pkg"
+    install_pkg go.pkg
+    trash go.pkg
     unset VERSION PLATFORM
     eval `/usr/libexec/path_helper -s`
 
@@ -248,12 +230,14 @@ this script in `bin/`.
 
     ```
     # Open in Safari to accept OTNLA
-    open "https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html" \
-    && read -p "Press Enter (Return) when complete" \
-    && hdiutil attach jdk-11.0.1_osx-x64_bin.dmg \
-    && install_pkg "/Volumes/JDK 11.0.1/JDK 11.0.1.pkg" \
-    && hdiutil detach "/Volumes/JDK 11.0.1/"
-    mv jdk-11.0.1_osx-x64_bin.dmg ${HOME}/.Trash
+    VERSION=${VERSION:-"11.0.1"}
+    PLATFORM="osx-x64"
+    open "https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html" 
+    read -p "Press Enter (Return) when complete"
+    hdiutil attach jdk-${VERSION}_${PLATFORM}_bin.dmg
+    install_pkg "/Volumes/JDK ${VERSION}/JDK ${VERSION}.pkg" \
+    hdiutil detach "/Volumes/JDK ${VERSION}/"
+    trash jdk-${VERSION}_${PLATFORM}_bin.dmg
     unset VERSION PLATFORM
     eval `/usr/libexec/path_helper -s`
     ```
@@ -261,13 +245,12 @@ this script in `bin/`.
 1. Update Python
 
     ```
-    curl -LO "https://www.python.org/ftp/python/3.7.1/python-3.7.1-macosx10.9.pkg"
-    install_pkg python-3.7.1-macosx10.9.pkg
-    mv python-3.7.1-macosx10.9.pkg ${HOME}/.Trash
-
-    curl -LO "https://www.python.org/ftp/python/2.7.15/python-2.7.15-macosx10.9.pkg"
-    install_pkg python-2.7.15-macosx10.9.pkg
-    mv python-2.7.15-macosx10.9.pkg ${HOME}/.Trash
+    PLATFORM="macosx10.9"
+    for VERSION in 3.7.1 2.7.15; do
+    curl -L -o python-${VERSION}.pkg "https://www.python.org/ftp/python/${VERSION}/python-${VERSION}-${PLATFORM}.pkg"
+      install_pkg python-${VERSION}.pkg
+      trash python-${VERSION}.pkg
+    done
     unset VERSION PLATFORM
     eval `/usr/libexec/path_helper -s`
     ```
@@ -285,6 +268,7 @@ this script in `bin/`.
     # Run the installer
     sudo bash rvm-installer stable --autolibs=read-fail
     sudo dseditgroup -o edit -a ${USER} -t user rvm
+    trash rvm-installer rvm-installer.asc
     unset VERSION PLATFORM
     eval `/usr/libexec/path_helper -s`
     ```
@@ -295,7 +279,7 @@ this script in `bin/`.
     VERSION=$(curl -sSL https://nodejs.org/dist/latest/ | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')
     curl "https://nodejs.org/dist/latest/node-${VERSION}.pkg" > "$HOME/Downloads/node-latest.pkg" \ &&
     install_pkg "node-latest.pkg"
-    mv "node-latest.pkg" ${HOME}/.Trash
+    trash "node-latest.pkg"
     unset VERSION PLATFORM
     eval `/usr/libexec/path_helper -s`
     ```
@@ -306,8 +290,8 @@ this script in `bin/`.
     pushd /opt
     git clone https://github.com/NetBSD/pkgsrc.git -b trunk --single-branch
     cd pkgsrc/ && git submodule init && git submodule update
-    git clone --depth 1 git://wip.pkgsrc.org/pkgsrc-wip.git wip
-    pushd /opt/pkgsrc/bootstrap
+    git submodule add --depth 1 git://wip.pkgsrc.org/pkgsrc-wip.git wip && git submodule update
+    cd /opt/pkgsrc/bootstrap
     sh bootstrap
     mkdir /opt/pkg/{work,distfiles}
     
@@ -359,7 +343,9 @@ function install_pkg {
 
 function trash {
   #TODO: error checking...
-  mv "$1" ${HOME}/.Trash
+  for i in $@; do
+    mv "$1" ${HOME}/.Trash
+  done
 }
   
 curl -L -o "jre-8u191-macosx-x64.dmg" "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=235718_2787e4a523244c269598db4e85c51e0c"
