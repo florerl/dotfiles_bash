@@ -128,13 +128,15 @@ this script in `bin/`.
 1. Install Xcode CLT
 
    ```
+   PLATFORM="macOS_10.14"
    xcode-select --install
    sudo xcodebuild -license accept
-   installer -package /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target \
+   install_pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_${PLATFORM}.pkg 
+   unset PLATFORM
    ```
     
     
-1. Install Xcode & configure Xcode
+1. Install Xcode & configure Xcode for GitHub
 
     - Use GUI...
     
@@ -149,11 +151,16 @@ this script in `bin/`.
 1. Install GPGtools
 
     ```
-    curl -LO "https://releases.gpgtools.org/GPG_Suite-2018.5.dmg"
-    hdiutil attach GPG_Suite-2018.5.dmg
+    VERSION=$(curl -s "https://gpgtools.org" | egrep -o "https://releases.gpgtools.org/GPG_Suite-[0-9]+\.[0-9]+" | sort -Vr | egrep -m 1 -o "[0-9]+\.[0-9]+"
+    VERSION=${VERSION:-"2018.5"}
+    PLATFORM=""
+    curl -L -o "GPG_Suite.dmg" "https://releases.gpgtools.org/GPG_Suite-${VERSION}.dmg"
+    hdiutil attach GPG_Suite.dmg
     install_pkg /Volumes/GPG\ Suite/Install.pkg
     hdiutil detach /Volumes/GPG\ Suite/
-    mv GPG_Suite-2018.5.dmg $HOME/.Trash
+    trash GPG_Suite.dmg
+    unset VERSION PLATFORM
+    eval `/usr/libexec/path_helper -s`
     ```
 
 1. Install Intel Compilers
@@ -161,6 +168,9 @@ this script in `bin/`.
     - Log in: https://software.intel.com/en-us/user/login?destination=node/790487
 
     ```
+    open "https://software.intel.com/en-us/user/login?destination=node/790487"
+    VERSION="2018.5"
+    PLATFORM=""
     mkdir /opt/intel/
     pushd /opt/intel/
     curl -LO "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/14903/m_pythoni3_p_2019.1.056.tar.gz"
@@ -201,6 +211,9 @@ this script in `bin/`.
 
 
     source /opt/intel/bin/compilervars.sh intel64
+    unset VERSION PLATFORM
+    eval `/usr/libexec/path_helper -s`
+    ```
 
 1. Install CMake
     ```
@@ -215,9 +228,7 @@ this script in `bin/`.
     sudo tee /etc/paths.d/cmake << EOF
     /Applications/CMake.app/Contents/bin
     EOF
-    unset VERSION PLATFORM
-    eval `/usr/libexec/path_helper -s`
-
+    ```
 
 1. Install Golang
 
