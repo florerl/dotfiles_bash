@@ -172,6 +172,20 @@ fi
 # Highlight the hostname when connected via SSH.
 [[ "${SSH_TTY}" ]] && hostStyle="${bold}${red}" || hostStyle="${yellow}";
 
+# Change the window title of X terminals 
+case ${TERM} in
+	[aEkx]term*|rxvt*|gnome*|konsole*|interix)
+		PS1='\[\033]0;\u@\h:\w\007\]'
+		;;
+	screen*)
+		PS1='\[\033k\u@\h:\w\033\\\]'
+		;;
+	*)
+		unset PS1
+		;;
+esac
+
+
 # Set the terminal title and prompt.
 # Define the sexy-bash-prompt
 PS1="\[ ${BOLD}${USER_COLOR} \]\u" 
