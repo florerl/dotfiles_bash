@@ -1,8 +1,25 @@
+### Start of universal section ###
+# Commands in this section will be executed by both interactive and
+# non-interactive shells.
+# Commands here must produce no output, or they will break commands
+# like scp and rsync.
+
+HOST=$(hostname -s)
+
+### End of universal section ###
+
+[ -z "$PS1" ] && return
+
+### Start of interactive section ###
+# Commands in this section will be executed only by interactive shells.
+
+### End of interactive section ###
+
 # shortcut to this dotfiles path is $ZSH
-export ZSH=$HOME/.dotfiles
+#export ZSH=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
-export PROJECTS=~/Code
+#export PROJECTS=~/Code
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
@@ -13,8 +30,8 @@ then
 fi
 
 # all of our zsh files
-typeset -U config_files
-config_files=($ZSH/**/*.zsh)
+#typeset -U config_files
+#config_files=($ZSH/**/*.zsh)
 
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}
