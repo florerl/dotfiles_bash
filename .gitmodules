@@ -5,3 +5,7 @@
 [submodule "liquidprompt"]
     path = liquidprompt
     url = https://github.com/nojhan/liquidprompt
+
+[submodule "solarized"]
+    path = solarized
+    url = https://github.com/altercation/solarized
