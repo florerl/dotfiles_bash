@@ -44,12 +44,31 @@
 
 
 [include]       # Local/private config goes in the include
-        path = ~/.gitconfig.local
+        path = $HOME/.gitconfig.local
 
 [core]
         editor = vim
-        excludesfile = ~/.gitignore
-	attributesfile = ~/.gitattributes
+	# Use custom `.gitignore` and `.gitattributes`
+	excludesfile = $HOME/.gitignore_global
+	attributesfile = $HOME/.gitattributes
+
+	# Treat spaces before tabs and all kinds of trailing whitespace as an error
+	# [default] trailing-space: looks for spaces at the end of a line
+	# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+	# Make `git rebase` safer on macOS
+	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	trustctime = false
+
+	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
+	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
+	precomposeunicode = false
+
+	# Speed up commands involving untracked files such as `git status`.
+	# https://git-scm.com/docs/git-update-index#_untracked_cache
+	untrackedCache = true
+
 
 [hub]
         protocol = https
@@ -66,26 +85,100 @@
         
 	# List aliases
         aliases = config --get-regexp alias
+
+	# Amend the currently staged files to the latest commit
+	#amend = commit --amend --reuse-message=HEAD
 	amend = commit --amend -a
-        co = checkout
+
+	# Show verbose output about branches
+	#branches = branch -a
+
+	co = checkout
+
+	# List contributors with number of commits
 	contrib = shortlog --summary --numbered
-        count   = !git shortlog -sn        
+	#contributors = shortlog --summary --numbered
+
+	count   = !git shortlog -sn     
+	
+	# Credit an author on the latest commit
+	#credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+
+	# Remove branches that have already been merged with master
+	# a.k.a. ‘delete merged’
+	#dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+
+	# Find branches containing commit
+	#fb = "!f() { git branch -a --contains $1; }; f"
+
+	# Find tags containing commit
+	#ft = "!f() { git describe --always --contains $1; }; f"
+
+	# Find commits by source code
+	#fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+
+	# Find commits by commit message
+	#fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+
+	# Switch to a branch, creating it if necessary
+	#go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+
 	graph = log --graph
+	
 	ignore = update-index --asume-unchanged
 	ignored = !git ls-files -v | grep "^[[:lower:]]"
-	"promote = !$ZSH/bin/git-promote
-	rank-contributors = !$ZSH/bin/git-rank-contributors
+	
+	# Merge GitHub pull request on top of the current branch or,
+	# if a branch name is specified, on top of the specified branch
+	mpr = "!f() { \
+		declare currentBranch=\"$(git symbolic-ref --short HEAD)\"; \
+		declare branch=\"${2:-$currentBranch}\"; \
+		if [ $(printf \"%s\" \"$1\" | grep '^[0-9]\\+$' > /dev/null; printf $?) -eq 0 ]; then \
+			git fetch origin refs/pull/$1/head:pr/$1 && \
+			git checkout -B $branch && \
+			git rebase $branch pr/$1 && \
+			git checkout -B $branch && \
+			git merge pr/$1 && \
+			git branch -D pr/$1 && \
+			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
+		fi \
+	}; f"
+
+	#promote = !$HOME/bin/git-promote
+	rank-contributors = !$HOME/bin/git-rank-contributors
+	# Interactive rebase with the given number of latest commits
+	#reb = "!r() { git rebase -i HEAD~$1; }; r"
+
 	recent = !git branch --sort=-committerdate | head
+
+	# Remove the old tag with this name and tag the latest commit with it.
+	#retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
+
+	# Show verbose output about tags, branches or remotes
+	#remotes = remote -v
+
 	show-ignored = "! git clean -ndX | perl -pe 's/Would remove/Ignored:/'"
 	sweep = !git fsck && git gc && git remote update --prune && git stash clear
+	
+	# Show verbose output about tags, branches or remotes
+	#tags = tag -l
+
 	undo = reset --hard HEAD
+	
 	unignore = update-index --no-assume-unchanged
+	
 	unstage = reset --hard HEAD
+	
 	update = !git checkout master && git checkout - && git merge master
+	
         "wtf     = !$ZSH/bin/git-wtf
 
+
+
 [apply]
-        whitespace = nowarn
+	# Detect whitespace errors when applying a patch 
+	whitespace = fix
+        #whitespace = nowarn
 
 [branch "master"]
 	remote = origin
@@ -104,9 +197,9 @@
 
 [color "diff"]
 	meta = yellow bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
+	frag = magenta bold	# line info
+	old = red bold		# deletions
+	new = green bold	# additions
 
 [color "status"]
 	added = yellow
@@ -119,6 +212,11 @@
 	newNormal = green bold
 	newHighlight = green bold 22
 	
+[commit]
+	# https://help.github.com/articles/signing-commits-using-gpg/
+	gpgsign = true
+
+
 [credential]
 	helper = osxkeychain
 	
@@ -128,6 +226,11 @@
 	indentHeuristic = true
 	"tool = Kaleidoscope
 	"tool = FileMerge
+
+[diff "bin"]
+	# Use `hexdump` to diff binary files
+	textconv = hexdump -v -C
+
 [difftool]
         prompt = false
 
@@ -164,6 +267,7 @@
 	lineNumber = true
 
 [help]
+	# Automatically correct and execute mistyped commands
         autocorrect = 1
 	
 [include]
@@ -178,6 +282,8 @@
 	"tool = Kaleidoscope
 	conflictstyle = diff3
 	defaultToUpstream = true
+	# Include summaries of merged commits in newly created merge commit messages
+	log = true
 
 [mergetool]
         keepBackup = false
@@ -195,6 +301,29 @@
         # for more information on different options of the below setting.
         #
         # Setting to git 2.0 default to suppress warning message
-        default = simple
+ 	# https://git-scm.com/docs/git-config#git-config-pushdefault
+	default = simple
+	# Make `git push` push relevant annotated tags when pushing branches out.
 	followTags = true
 
+# URL shorthands
+
+[url "git@github.com:"]
+
+	insteadOf = "gh:"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+
+[url "git://github.com/"]
+
+	insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+
+	insteadOf = "gist:"
