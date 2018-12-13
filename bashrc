@@ -43,7 +43,7 @@ shopt -s histappend
 # first to take advantage of user additions.
 # We run dircolors directly due to its changes in file syntax and
 # terminal name patching.
-use_color=false
+
 if type -P dircolors >/dev/null ; then
 	# Enable colors for ls, etc.  Prefer ~/.dir_colors #64489
 	LS_COLORS=
@@ -78,7 +78,18 @@ if ${use_color} ; then
 	alias grep='grep --colour=auto'
 	alias egrep='egrep --colour=auto'
 	alias fgrep='fgrep --colour=auto'
+	if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+		# We have color support; assume it's compliant with Ecma-48
+       		# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        	# a case would tend to support setf rather than setaf.)
+        	color_prompt=yes
+	else
+        	color_prompt=
+	fi
 fi
+
+if [ -a $HOME/.prompt]; then source $HOME/.prompt; fi
+unset use_color color_prompt
 
 
 ### End of interactive section ###
@@ -92,7 +103,7 @@ fi
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
-if [[ -a ~/.localrc ]]
+if [[ -e ~/.localrc ]]
 then
   source ~/.localrc
 fi
