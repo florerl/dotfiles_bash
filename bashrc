@@ -72,6 +72,13 @@ else
 	esac
 fi
 
+if ${use_color} ; then
+	#BSD#@export CLICOLOR=1
+	#GNU#@alias ls='ls --color=auto'
+	alias grep='grep --colour=auto'
+	alias egrep='egrep --colour=auto'
+	alias fgrep='fgrep --colour=auto'
+fi
 
 
 ### End of interactive section ###
@@ -126,3 +133,6 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
+
+# Try to keep environment pollution down, EPA loves us.
+unset use_color sh
