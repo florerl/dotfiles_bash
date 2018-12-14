@@ -22,3 +22,4 @@ intel-numpy
 intel-scipy
 intel-scikit-learn
 tbb4py
+jupyter
