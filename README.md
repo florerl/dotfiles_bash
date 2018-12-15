@@ -70,6 +70,32 @@ this script in `bin/`.
 
     ```git submodule update --init --remote```
 
+## Setting up your Mac
+
+If you did all of the above you may now follow these install instructions to setup a new Mac.
+
+1. Update macOS to the latest version with the App Store
+
+1. Install Xcode from the App Store, open it and accept the license agreement
+
+1. Install macOS Command Line Tools by running xcode-select --install
+
+1. Copy your public and private SSH keys to ~/.ssh and make sure they're set to 600
+
+1. Clone this repo to ~/.dotfiles
+
+1. Append /usr/local/bin/zsh to the end of your /etc/shells file
+
+1. Run install.sh to start the installation
+
+1. Restore preferences by running mackup restore
+
+1. Restart your computer to finalize the process
+
+Your Mac is now ready to use!
+
+
+
 ## Bootstrap ToDo:
 
 1. Set name (sudo required, authorization)
