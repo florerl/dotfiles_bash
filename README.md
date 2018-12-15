@@ -98,59 +98,16 @@ Your Mac is now ready to use!
 
 ## Bootstrap ToDo:
 
-1. Set name (sudo required, authorization)
-
-    - ```sudo sciutil --set ComputerName $HOST`
-       sudo sciutil --set HostName $HOST`
-       sudo sciutil --set LocalHostName $HOST```
-    
-    - `exec bash -l`
-    
-1. Enable location services (sudo required, hidden from User)
-
-    - `sudo defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -int 1`
-    
-    - `chown -R _locationd:_locationd /var/db/locationd`
-    
-1. Enable automatic timezone update
-
-    - `defaults write /Library/Preferences/com.apple.timezone.auto Active -bool true`
-    
-    - `defaults write /Library/Preferences/com.apple.locationmenu ShowSystemServices -bool true`
-    
-1. Enable network time (sudo requiried, authorization)
-
-    ```
-    sudo systemsetup -setusingnetworktime on
-    sudo systemsetup -setnetworktimeserver 0.us.pool.ntp.org
-    sudo tee /etc/ntp.conf << EOF
-    1.us.pool.ntp.org
-    2.us.pool.ntp.org
-    3.us.pool.ntp.org
-    EOF
-    ```
-
 1. Set misc. system settings
 
     ```
-
-      # Restart automatically if the computer freezes
-    sudo systemsetup -setrestartfreeze on
-   
-      # Never go into computer sleep mode
-    #sudo systemsetup -setcomputersleep Off > /dev/null
-
       # Set a custom wallpaper image. `DefaultDesktop.jpg` is already a symlink, and
       # all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
     #rm -rf ~/Library/Application Support/Dock/desktoppicture.db
     #sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
     #sudo ln -s /path/to/your/image /System/Library/CoreServices/DefaultDesktop.jpg
     ```
-  
-1. Update system
-
-    - `sudo softwareupdate -i -a`
-    
+     
 1. Install Xcode CLT
 
    ```
