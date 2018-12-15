@@ -190,6 +190,12 @@ Your Mac is now ready to use!
     eval `/usr/libexec/path_helper -s`
     ```
 
+1. Install GitHub Desktop
+
+    ```
+    cd /Applications/
+    curl -LO "https://central.github.com/deployments/desktop/desktop/latest/darwin"
+
 1. Install Intel Compilers
 
     - Log in: https://software.intel.com/en-us/user/login?destination=node/790487
