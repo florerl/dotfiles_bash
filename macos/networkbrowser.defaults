@@ -1,4 +1,4 @@
-# Enable AirDrop over Ethernet and on Unsupported Macs
+# Enable AirDrop over Ethernet and on Unsupported Macs (running Lion)
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
 # Disable AirDrop
