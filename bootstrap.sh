@@ -6,6 +6,8 @@ if [ -n $REPLY ]; then
   HOST=$REPLY
 fi
 
+sudo install -m 0775 -g admin -d /opt
+
 # Set computer name
 sudo sciutil --set ComputerName $HOST
 sudo sciutil --set HostName $HOST
