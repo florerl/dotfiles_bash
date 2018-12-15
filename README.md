@@ -197,7 +197,7 @@ this script in `bin/`.
 
 1. Install CMake
     ```
-    #VERSION=$(curl "https://cmake.org/download/" | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')
+    VERSION=$(curl "https://github.com/Kitware/CMake/releases" | egrep -o "cmake-[0-9]+\.[0-9]+\.[0-9]+-.*\.dmg" | sort -Vr | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
     VERSION=${VERSION:-"3.13.1"}
     PLATFORM="Darwin-x86_64"
     curl -L -o "cmake.dmg" "https://github.com/Kitware/CMake/releases/download/v${VERSION}/cmake-${VERSION}-${PLATFORM}.dmg"
@@ -216,9 +216,9 @@ this script in `bin/`.
 1. Install Golang
 
     ```
-    #VERSION=$(curl "https://golang.org/dl/" | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')
-    VERSION=${VERSION:-"1.11.2"}
     PLATFORM="darwin-amd64"
+    VERSION=$(curl "https://golang.org/dl/" | egrep -o "https://dl.google.com/go/go[0-9]+\.[0-9]+\.[0-9]+\.${PLATFORM}\.pkg" | sort -Vr | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
+    VERSION=${VERSION:-"1.11.2"}
     curl -L -o go.pkg "https://dl.google.com/go/go${VERSION}.${PLATFORM}.pkg"
     install_pkg go.pkg
     trash go.pkg
@@ -247,12 +247,16 @@ this script in `bin/`.
 
     ```
     PLATFORM="macosx10.9"
-    for VERSION in 3.7.1 2.7.15; do
+    VERSION3=$(curl "https://www.python.org/downloads/mac-osx/" | egrep -o "Latest Python 3 Release - Python [0-9]+\.[0-9]+\.[0-9]+" | sort -Vr | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
+    VERSION3=${VERSION3:-"3.7.0"}
+    VERSION2=$(curl "https://www.python.org/downloads/mac-osx/" | egrep -o "Latest Python 2 Release - Python [0-9]+\.[0-9]+\.[0-9]+" | sort -Vr | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
+    VERSION2=${VERSION2:-"$(/usr/bin/python -V 2>&1 | egrep -o '[0-9]+\.[0-9]+\.[0-9]+')"}
+    for VERSION in $VERSION3 $VERSION2; do
     curl -L -o python-${VERSION}.pkg "https://www.python.org/ftp/python/${VERSION}/python-${VERSION}-${PLATFORM}.pkg"
       install_pkg python-${VERSION}.pkg
       trash python-${VERSION}.pkg
     done
-    unset VERSION PLATFORM
+    unset VERSION VERSION2 VERSION3 PLATFORM
     eval `/usr/libexec/path_helper -s`
     ```
 
@@ -278,12 +282,38 @@ this script in `bin/`.
 
     ```
     VERSION=$(curl -sSL https://nodejs.org/dist/latest/ | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')
-    curl "https://nodejs.org/dist/latest/node-${VERSION}.pkg" > "$HOME/Downloads/node-latest.pkg" \ &&
-    install_pkg "node-latest.pkg"
-    trash "node-latest.pkg"
+    curl -L -o "node.pkg" "https://nodejs.org/dist/latest/node-${VERSION}.pkg" \ &&
+    install_pkg "node.pkg"
+    trash "node.pkg"
     unset VERSION PLATFORM
     eval `/usr/libexec/path_helper -s`
     ```
+
+1. Install R
+
+    ```
+    VERSION=$(curl -sSL http://cran.cnr.berkeley.edu/bin/macosx/ | egrep -o "R-[0-9]+\.[0-9]+\.[0-9]+.pkg" | sort -Vr | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
+    VERSION=${VERSION:-"3.5.1"}
+    
+    curl -L -o "R.pkg" "http://cran.cnr.berkeley.edu/bin/macosx/R-${VERSION}.pkg"
+    install_pkg "R.pkg"
+    trash "R.pkg"
+    unset VERSION
+    eval `/usr/libexec/path_helper -s`
+    
+    
+  1. Install RStudio
+  
+      ```
+      VERSION=$(curl -sSL https://www.rstudio.com/products/rstudio/download/ | egrep -o "RStudio-[0-9]+\.[0-9]+\.[0-9]+\.dmg" | sort -Vr | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
+      VERSION=${VERSION:-1.1.463}
+      
+      curl -L -o "RStudio.dmg" "https://download1.rstudio.org/RStudio-${VERSION}.dmg"
+      hdiutil mount RStudio.dmg
+      cp -R /Volumes/RStudio-${VERSION}/RStudio.app /Applications/
+      hdiutil detach /Volumes/RStudio-${VERSION}
+      trash RStudio.dmg
+      
 
 1. Install pkgsrc
 
