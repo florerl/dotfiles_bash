@@ -1,0 +1,6 @@
+cvs -q -z2
+checkout -P
+update -dP
+diff -upN
+rdiff -u
+release -d
