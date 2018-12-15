@@ -332,6 +332,7 @@ Your Mac is now ready to use!
     trash "R.pkg"
     unset VERSION
     eval `/usr/libexec/path_helper -s`
+    ```
     
     
   1. Install RStudio
@@ -345,7 +346,16 @@ Your Mac is now ready to use!
       cp -R /Volumes/RStudio-${VERSION}/RStudio.app /Applications/
       hdiutil detach /Volumes/RStudio-${VERSION}
       trash RStudio.dmg
+      unset VERSION
+      ```
       
+1. Install MacTeX
+
+    ```
+    curl -LO "http://tug.org/cgi-bin/mactex-download/MacTeX.pkg"
+    install_pkg MacTeX.pkg
+    trash MacTeX.pkg
+    ```
 
 1. Install pkgsrc
 
