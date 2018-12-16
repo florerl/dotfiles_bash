@@ -3,5 +3,10 @@
 
 # 1:Enable (Default), 0:Disable
 sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 1
-#sudo launchctl unload /System/Library/LaunchDaemons/com.apple.blued.plist
-#sudo launchctl load /System/Library/LaunchDaemons/com.apple.blued.plist
+sudo launchctl unload /System/Library/LaunchDaemons/com.apple.blued.plist
+sudo launchctl load /System/Library/LaunchDaemons/com.apple.blued.plist
+
+
+# "Increase sound quality for Bluetooth headphones/headsets"
+defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+
