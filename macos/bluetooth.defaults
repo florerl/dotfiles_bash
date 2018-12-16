@@ -1,11 +1,7 @@
 # Status
 #defaults read /Library/Preferences/com.apple.Bluetooth ControllerPowerState
 
-# Enable (Default)
+# 1:Enable (Default), 0:Disable
 sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 1
-
-# Disable
-#sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0 && \
-
-
-#sudo killall -HUP blued
+#sudo launchctl unload /System/Library/LaunchDaemons/com.apple.blued.plist
+#sudo launchctl load /System/Library/LaunchDaemons/com.apple.blued.plist
