@@ -1,0 +1,9 @@
+# Display login window as name and password
+#sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
+
+# Do not show password hints
+sudo defaults write /Library/Preferences/com.apple.loginwindow RetriesUntilHint -int 0
+
+# Disable guest account login
+sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool false
+
