@@ -1,9 +1,16 @@
+# Menu bar transparency
+defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool true
 
 # Trackpad: swipe between pages with three fingers
 defaults write NSGlobalDomain AppleEnableSwipeNavigateWithScrolls -bool true
 
 # Enable subpixel font rendering on non-Apple LCDs
 defaults write NSGlobalDomain AppleFontSmoothing -int 2
+
+# Set highlight color
+#defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600" #Green
+
+
 
   # Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
