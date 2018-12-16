@@ -7,3 +7,6 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow RetriesUntilHint 
 # Disable guest account login
 sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool false
 
+# "Reveal IP, hostname, OS, etc. when clicking clock in login window"
+sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName;ok
+
