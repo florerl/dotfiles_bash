@@ -2,12 +2,12 @@
     link:
         relink: true
         
-- clean: ['~']
+- clean: ['$HOME']
 
 - link:
-    ~/.dotfiles: ''
-    ~/.vim:
-    ~/.vimrc:
+    $HOME/.dotfiles: ''
+    $HOME/.vim:
+    $HOME/.vimrc: vim/vimrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
