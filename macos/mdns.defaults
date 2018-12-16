@@ -1,0 +1,3 @@
+# Disable Bonjour multicast advertisements
+#sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool true
+
