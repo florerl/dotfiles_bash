@@ -20,8 +20,16 @@ defaults write com.apple.dashboard mcx-disabled -bool true
 defaults write com.apple.Dock size-immutable -bool yes
 # Resize Dock - 1:1pxl
 #defaults write com.apple.dock tilesize -int 40
+#running "Enable the 2D Dock"
+#defaults write com.apple.dock no-glass -bool true;ok
+
 
 ### Composition
+# running "Wipe all (default) app icons from the Dock"
+## This is only really useful when setting up a new Mac, or if you don’t use
+## the Dock to launch apps.
+# defaults write com.apple.dock persistent-apps -array "";ok
+
 # Add a small space
 defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="small-spacer-tile";}'
 # Add a space
@@ -103,3 +111,8 @@ defaults write com.apple.dock dashboard-in-overlay -bool true
 # Run the screensaver if we're in the bottom-left hot corner.
 defaults write com.apple.dock wvous-bl-corner -int 5
 defaults write com.apple.dock wvous-bl-modifier -int 0
+
+## Launchpad
+#running "Disable the Launchpad gesture (pinch with thumb and three fingers)"
+#defaults write com.apple.dock showLaunchpadGestureEnabled -int 0;ok
+
