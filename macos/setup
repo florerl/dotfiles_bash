@@ -66,3 +66,18 @@ sudo pmset -a sms 0;ok
 # running "Enable the MacBook Air SuperDrive on any Mac"
 # sudo nvram boot-args="mbasd=1";ok
 
+#######
+#  #
+#######
+#running "always boot in verbose mode (not MacOS GUI mode)"
+#sudo nvram boot-args="-v";ok
+
+#running "allow 'locate' command"
+sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist > /dev/null 2>&1;ok
+
+#running "Set standby delay to 24 hours (default is 1 hour)"
+sudo pmset -a standbydelay 86400;ok
+
+#running "Disable the sound effects on boot"
+#sudo nvram SystemAudioVolume=" ";ok
+
