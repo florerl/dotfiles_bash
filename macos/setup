@@ -69,15 +69,23 @@ sudo pmset -a sms 0;ok
 #######
 #  #
 #######
-#running "always boot in verbose mode (not MacOS GUI mode)"
+# "always boot in verbose mode (not MacOS GUI mode)"
 #sudo nvram boot-args="-v";ok
 
-#running "allow 'locate' command"
+# "allow 'locate' command"
 sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist > /dev/null 2>&1;ok
 
-#running "Set standby delay to 24 hours (default is 1 hour)"
+# "Set standby delay to 24 hours (default is 1 hour)"
 sudo pmset -a standbydelay 86400;ok
 
-#running "Disable the sound effects on boot"
+# "Disable the sound effects on boot"
 #sudo nvram SystemAudioVolume=" ";ok
+
+
+# "Restart automatically if the computer freezes"
+sudo systemsetup -setrestartfreeze on;ok
+
+# "Never go into computer sleep mode"
+sudo systemsetup -setcomputersleep Off > /dev/null;ok
+
 
