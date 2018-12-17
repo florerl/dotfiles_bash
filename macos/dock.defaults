@@ -20,15 +20,15 @@ defaults write com.apple.dashboard mcx-disabled -bool true
 defaults write com.apple.Dock size-immutable -bool yes
 # Resize Dock - 1:1pxl
 #defaults write com.apple.dock tilesize -int 40
-#running "Enable the 2D Dock"
-#defaults write com.apple.dock no-glass -bool true;ok
+# "Enable the 2D Dock"
+#defaults write com.apple.dock no-glass -bool true
 
 
 ### Composition
-# running "Wipe all (default) app icons from the Dock"
+# "Wipe all (default) app icons from the Dock"
 ## This is only really useful when setting up a new Mac, or if you don’t use
 ## the Dock to launch apps.
-# defaults write com.apple.dock persistent-apps -array "";ok
+# defaults write com.apple.dock persistent-apps -array ""
 
 # Add a small space
 defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="small-spacer-tile";}'
@@ -48,16 +48,21 @@ defaults write com.apple.dock persistent-others -array-add '{ "tile-data" = { "l
 # Enable Dock autohide
 defaults write com.apple.dock autohide -bool true
 # Autohide delay in ms
-defaults write com.apple.dock autohide-time-modifier -float 0.4
-defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-delay -float 100
+# Autohide animation time
+defaults write com.apple.dock autohide-time-modifier -float 10
 
 # Icon Bounce if App requires attention
 defaults write com.apple.dock no-bouncing -bool false 
+
 # Make Dock icons of hidden applications translucent
 defaults write com.apple.dock showhidden -bool true
+# Show indicator lights for open applications in the Dock
+defaults write com.apple.dock show-process-indicators -bool true
 
 # Show only Active Apps
 defaults write com.apple.dock static-only -bool false
+
 # Interact with Scroll Gestures
 defaults write com.apple.dock scroll-to-open -bool true
 # Enable spring loading for all Dock items
@@ -65,12 +70,26 @@ defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
 # Show indicator lights for open applications in the Dock
 defaults write com.apple.dock show-process-indicators -bool true
 
+# Change minimize/maximize window effect
+defaults write com.apple.dock mineffect -string "scale"
+# Minimize windows into their application’s icon
+defaults write com.apple.dock minimize-to-application -bool true
+
+# Enable spring loading for all Dock items
+defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
+
+
 
 
 
 ### Stacks
 # Enable highlight hover effect for the grid view of a stack
 # defaults write com.apple.dock mouse-over-hilite-stack -bool true
+
+## Dashboard
+# Disable Dashboard
+defaults write com.apple.dashboard mcx-disabled -bool true
+
 
 
 ## Spaces
@@ -83,6 +102,9 @@ defaults write com.apple.dock dashboard-in-overlay -bool true
 ## Expóse / Mission Control
 # Speed up Mission Control animations
 # defaults write com.apple.dock expose-animation-duration -float 0.1
+# Don’t group windows by application in Mission Control
+# (i.e. use the old Exposé behavior instead)
+#defaults write com.apple.dock expose-group-by-app -bool false
 
 
 # Hot corners
@@ -113,6 +135,7 @@ defaults write com.apple.dock wvous-bl-corner -int 5
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ## Launchpad
-#running "Disable the Launchpad gesture (pinch with thumb and three fingers)"
-#defaults write com.apple.dock showLaunchpadGestureEnabled -int 0;ok
+#"Disable the Launchpad gesture (pinch with thumb and three fingers)"
+#defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
+
 
