@@ -314,6 +314,20 @@ Your Mac is now ready to use!
     trash MacTeX.pkg
     ```
 
+1. Install XQuartz
+
+    ```
+    VERSION=$(curl -sSL https://www.xquartz.org/releases/index.html | egrep -o "releases/XQuartz-[0-9]+\.[0-9]+\.[0-9]+\.html" | sort -Vr | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
+    VERSION=${VERSION:-2.7.11}
+    
+    curl -L -o "XQuartz.dmg" "https://dl.bintray.com/xquartz/downloads/XQuartz-${VERSION}.dmg"
+    hdiutil mount XQuartz.dmg
+    pkg_install /Volumes/XQuartz-${VERSION}/XQuartz.pkg
+    hdiutil detach /Volumes/XQuartz-${VERSION}
+    trash XQuartz.dmg
+    unset VERSION
+    ```
+
 1. Install pkgsrc
 
     ```
