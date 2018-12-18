@@ -59,7 +59,7 @@ alias dnsflush='dscacheutil -flushcache && killall -HUP mDNSResponder'
   # Clean up LaunchServices to remove duplicates in the “Open With” menu
 alias lscleanup='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder'
   # Empty the Trash on all mounted volumes and the main HDD.
-alias emptytrash='sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash' 
+alias emptytrash='sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv $HOME/.Trash' 
   # Clear download history from quarantine. https://mths.be/bum
 alias gasprison='sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent"'
 
