@@ -12,7 +12,9 @@
     $HOME/.spacemacs: spacemacs_config
     $HOME/.emacs.d: spacemacs/
     $HOME/.gitconfig:
-    $HOME/.gitignore_global
+    $HOME/.gitignore_global:
+    $HOME/.prompt: liquidprompt/liquidprompt
+    $HOME/.config:
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
