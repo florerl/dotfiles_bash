@@ -9,3 +9,8 @@
 [submodule "solarized"]
     path = solarized
     url = https://github.com/altercation/solarized
+
+[submodule "spacemacs"]
+	path = spacemacs
+	url = https://github.com/syl20bnr/spacemacs.git
+	branch = develop
