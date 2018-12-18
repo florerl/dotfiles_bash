@@ -1,5 +1,6 @@
 - defaults:
     link:
+        create: true
         relink: true
         
 - clean: ['$HOME']
@@ -8,6 +9,10 @@
     $HOME/.dotfiles: ''
     $HOME/.vim:
     $HOME/.vimrc: vim/vimrc
+    $HOME/.spacemacs: spacemacs_config
+    $HOME/.emacs.d: spacemacs/
+    $HOME/.gitconfig:
+    $HOME/.gitignore_global
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
