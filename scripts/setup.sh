@@ -13,11 +13,29 @@ function trash {
 }
 
 PLATFORM="macOS_10.14"
-# Instal Xcode CLT
-xcode-select --install
-sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-sudo xcodebuild -license accept
-install_pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_${PLATFORM}.pkg 
+if ! xcode-select --print-path &> /dev/null; then
+    # Prompt user to install the XCode Command Line Tools
+    xcode-select --install
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Wait until the XCode Command Line Tools are installed
+    until xcode-select --print-path &> /dev/null; do
+        sleep 5
+    done
+    print_result $? 'Install XCode Command Line Tools'
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Point the `xcode-select` developer directory to
+    # the appropriate directory from within `Xcode.app`
+    # https://github.com/alrra/dotfiles/issues/13
+    sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+    print_result $? 'Make "xcode-select" developer directory point to Xcode'
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Prompt user to agree to the terms of the Xcode license
+    # https://github.com/alrra/dotfiles/issues/10
+    sudo xcodebuild -license accept
+    print_result $? 'Agree with the XCode Command Line Tools licence'
+
+    install_pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_${PLATFORM}.pkg 
+fi
 unset PLATFORM
 
 # Install GitHub Desktop
