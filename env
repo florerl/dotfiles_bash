@@ -1,5 +1,13 @@
-export EDITOR='oni'
-export VISUAL='oni'
+if which oni > /dev/null; then
+  export EDITOR='oni'
+  export VISUAL='oni'
+elif which vim > /dev/null; then
+  export EDITOR='vim'
+  export VISUAL='vim'
+else
+  export EDITOR='vi'
+  export VISUAL='vi'
+fi
 
 ## Set by "system"
 # HOME, LOGNAME, TMPDIR, NLSPATH
@@ -22,7 +30,7 @@ export LANG=en_US.UTF-8
   #export PS3
   #export PS4
 ## bash Shell prompt
-  #export PROMPT_COMMAND
+  export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 ## set by shell
 #LINENO, OPTARG, OPTERR, OPTIND, PPID, PWD, RANDOM, SECONDS
@@ -46,7 +54,7 @@ export HISTSIZE='32786'
   #export FIGNORE
   #export GLOBIGNORE
   export HISTCONTROL='ignoreboth'
-  #export HISTTIMEFORMAT
+  export HISTTIMEFORMAT='%F %T'
   #export HOSTFILE
   #export IGNOREEOF
   #export INPUTRC
@@ -173,17 +181,3 @@ export PYTHONIOENCODING='UTF-8';
 #export PYTHONVERBOSE
 #export PYTHONWARNINGS
 #export PYTHONHASHSEED
-
-#export TERM_PROGRAM=Apple_Terminal
-Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.TSm5ERVeTP/Render
-TERM_PROGRAM_VERSION=421.1
-TERM_SESSION_ID=ED939CF3-AADF-45AF-84EA-CBA320D035D7
-USER=luke
-NIX_REMOTE=daemon
-SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.pwwMfkv0jo/Listeners
-PATH=/Users/luke/.local/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Users/luke/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/local/sbin:/opt/pkg/bin:/opt/pkg/sbin
-NIX_PATH=nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels
-PWD=/Users/luke/Downloads/jdupes-1.11.1_osx
-XPC_FLAGS=0x0
-XPC_SERVICE_NAME=0
-SHLVL=1
