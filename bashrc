@@ -34,6 +34,19 @@ shopt -s no_empty_cmd_completion
 # Enable history appending instead of overwriting when exiting.  #139609
 shopt -s histappend
 
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob;
+
+# Correct spelling errors in arguments supplied to cd
+shopt -s cdspell;
+
+# Autocorrect on directory names to match a glob.
+shopt -s dirspell 2> /dev/null
+
+# Turn on recursive globbing (enables ** to recurse all directories)
+shopt -s globstar 2> /dev/null
+
+
 # Save each command to the history file as it's executed.  #517342
 # This does mean sessions get interleaved when reading later on, but this
 # way the history is always up to date.  History is not synced across live
@@ -46,7 +59,7 @@ shopt -s histappend
 # Use Bash completion, if installed
 if [ -f /etc/bash_completion ]; then source /etc/bash_completion; fi
 
-
+complete -W "NSGlobalDomain" defaults
 
 
 # Set colorful PS1 only on colorful terminals.
