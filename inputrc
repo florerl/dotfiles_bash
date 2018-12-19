@@ -45,7 +45,7 @@ set visible-stats on
 "\e[B": history-search-forward     
 "\e[A": history-search-backward    
 "\e[Z": menu-complete         # Flip through autocompletion matches with Shift-Tab.
-
+Space: magic-space
 
 #########################
 ## Commands for Moving ##
