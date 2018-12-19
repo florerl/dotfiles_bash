@@ -4,6 +4,12 @@
 # Commands here must produce no output, or they will break commands
 # like scp and rsync.
 
+if [ -f /etc/bashrc ]; then
+	source /etc/bashrc
+elif [ -f /etc/bash.bashrc ]; then
+	source /etc/bash.bashrc
+fi
+
 HOST=$(hostname -s)
 
 ### End of universal section ###
@@ -36,6 +42,12 @@ shopt -s histappend
 # is under duress, or lives somewhere flaky (like NFS).  Constantly syncing
 # the history will halt the shell prompt until it's finished.
 #PROMPT_COMMAND='history -a'
+
+# Use Bash completion, if installed
+if [ -f /etc/bash_completion ]; then source /etc/bash_completion; fi
+
+
+
 
 # Set colorful PS1 only on colorful terminals.
 # dircolors --print-database uses its own built-in database
@@ -78,18 +90,12 @@ if ${use_color} ; then
 	alias grep='grep --colour=auto'
 	alias egrep='egrep --colour=auto'
 	alias fgrep='fgrep --colour=auto'
-	if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-		# We have color support; assume it's compliant with Ecma-48
-       		# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-        	# a case would tend to support setf rather than setaf.)
-        	color_prompt=yes
-	else
-        	color_prompt=
-	fi
 fi
 
-if [ -a $HOME/.prompt]; then source $HOME/.prompt; fi
-unset use_color color_prompt
+for file in ~/.{extra,prompt,exports,aliases,functions}; do
+    [ -r "$file" ] && source "$file"
+done
+unset file use_color color_prompt
 
 
 ### End of interactive section ###
@@ -103,47 +109,8 @@ unset use_color color_prompt
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
-if [[ -e ~/.localrc ]]
-then
-  source ~/.localrc
-fi
+if [[ -e ~/.localrc ]]; then source ~/.localrc; fi
 
-# all of our zsh files
-#typeset -U config_files
-#config_files=($ZSH/**/*.zsh)
-
-# load the path files
-for file in ${(M)config_files:#*/path.zsh}
-do
-  source $file
-done
-
-# load everything but the path and completion files
-for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
-do
-  source $file
-done
-
-# initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
-
-# load every completion after autocomplete loads
-for file in ${(M)config_files:#*/completion.zsh}
-do
-  source $file
-done
-
-unset config_files
-
-# Better history
-# Credits to https://coderwall.com/p/jpj_6q/zsh-better-history-searching-with-arrow-keys
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "^[[A" up-line-or-beginning-search # Up
-bindkey "^[[B" down-line-or-beginning-search # Down
 
 # Try to keep environment pollution down, EPA loves us.
 unset use_color sh
