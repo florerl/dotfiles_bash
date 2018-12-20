@@ -1,3 +1,4 @@
+echo "Bash Functions"
 function  update {
 	sudo /usr/sbin/softwareupdate -i -a
 	
@@ -463,3 +464,5 @@ function tre() {
 #    fi
 #  fi
 #}
+
+echo "End Bash Functions"
