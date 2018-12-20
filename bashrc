@@ -4,21 +4,24 @@
 # Commands here must produce no output, or they will break commands
 # like scp and rsync.
 
-if [ -f /etc/bashrc ]; then
-	source /etc/bashrc
-elif [ -f /etc/bash.bashrc ]; then
-	source /etc/bash.bashrc
-fi
+if [ -r /etc/bashrc ]; then source /etc/bashrc;
+elif [ -r /etc/bash.bashrc ]; then source /etc/bash.bashrc; fi
 
-HOST=$(hostname -s)
+if [ -r $HOME/.profile ]; then source $HOME/.profile; fi
+
 
 ### End of universal section ###
+if [[ $- != *i* ]] ; then return fi  # Shell is non-interactive.  Be done now!
 
-if [[ $- != *i* ]] ; then
-	# Shell is non-interactive.  Be done now!
-	return
-fi
+
 ### Start of interactive section ###
+# set default options for 'bash/GNU'
+export HISTCONTROL='ignoreboth'
+export HISTTIMEFORMAT='%F %T'
+export TIMEFORMAT= $'\nreal\t%lR\tuser\t%lU\tsys%lS'
+
+
+
 # Commands in this section will be executed only by interactive shells.
 
 # Bash won't get SIGWINCH if another process is in the foreground.
@@ -47,19 +50,14 @@ shopt -s dirspell 2> /dev/null
 shopt -s globstar 2> /dev/null
 
 
-# Save each command to the history file as it's executed.  #517342
-# This does mean sessions get interleaved when reading later on, but this
-# way the history is always up to date.  History is not synced across live
-# sessions though; that is what `history -n` does.
-# Disabled by default due to concerns related to system recovery when $HOME
-# is under duress, or lives somewhere flaky (like NFS).  Constantly syncing
-# the history will halt the shell prompt until it's finished.
-#PROMPT_COMMAND='history -a'
 
 # Use Bash completion, if installed
-if [ -f /etc/bash_completion ]; then source /etc/bash_completion; fi
+#if which brew &> /dev/null && [ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]; then source "$(brew --prefix)/share/bash-completion/bash_completion";
+if [ -r /etc/bash_completion ]; then source /etc/bash_completion; fi
 
-complete -W "NSGlobalDomain" defaults
+# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
+[ -e "${HOME}/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
+
 
 
 # Set colorful PS1 only on colorful terminals.
@@ -105,20 +103,21 @@ if ${use_color} ; then
 	alias fgrep='fgrep --colour=auto'
 fi
 
-for file in ~/.{extra,prompt,exports,aliases,functions}; do
-    [ -r "$file" ] && source "$file"
+for file in $HOME/.{extra,prompt,exports,aliases,functions,function_*,path,grep,prompt,nvm,completion,custom}; do
+    [[ -r "$file" ]] && source "$file"
 done
-unset file use_color color_prompt
 
-
-### End of interactive section ###
-
+#if [[ $(uname) == Darwin ]]; then for file in $HOME/.{bash}.macos; do [[ -f $file ]] && source $file; done; fi
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
-if [[ -e ~/.localrc ]]; then source ~/.localrc; fi
-
+if [[ -r ~/.localrc ]]; then source ~/.localrc; fi
 
 # Try to keep environment pollution down, EPA loves us.
-unset use_color sh
+unset file use_color color_prompt
+
+### End of interactive section ###
+
+
+
