@@ -11,7 +11,7 @@ if [ -r $HOME/.profile ]; then source $HOME/.profile; fi
 
 
 ### End of universal section ###
-if [[ $- != *i* ]] ; then return fi  # Shell is non-interactive.  Be done now!
+if [[ $- != *i* ]] ; then return; fi  # Shell is non-interactive.  Be done now!
 
 ### Start of interactive section ###
 echo "BashRC"
