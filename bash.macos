@@ -71,6 +71,8 @@ _defaults() {
   case "${prev}" in
     defaults)
       COMPREPLY=( $(compgen -W "${opts}" -- defaults) )
+      return 0
+      ;;
     read|readtype|write|rename|delete)
       local doms="NSGlobal $(defaults domains | sed -e 's/,//g')"
       COMPREPLY=( $(compgen -W "$doms" -- ${cur}) )
