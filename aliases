@@ -1,3 +1,9 @@
+# Use Python 3
+alias python=python3
+alias pip=pip3
+alias pydoc=pydoc3
+alias python-config=python3-config
+
 # Application.app
 alias safari='open -a Safari'
 alias chrome='open -a Chrome'
@@ -35,7 +41,7 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 	alias "${method}"="lwp-request -m '${method}'"
 done
 
-# Stuff I never really use but cannot delete either because of http://xkcd.com/530/
+# Stuff mathias never really uses but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume output volume 100'"
 
@@ -71,22 +77,20 @@ unset jscbin;
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
- Show/hide hidden files in Finder
-#alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-#alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
-
-# Hide/show all desktop icons (useful when presenting)
-#alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-#alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
+ccat=$(which ccat)
+[ -x "${ccat}" ] && alias cat="${ccat}";
+unset ccat;
 
-
+# Show/hide hidden files in Finder
 alias showdot="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
 alias hidedot="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+
+# Hide/show all desktop icons (useful when presenting)
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+
 alias bonjouroff="defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array-add -NoMulticastAdvertisements"
 alias bonjouron="defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array /usr/sbin/mDNSResponder -launchd"
