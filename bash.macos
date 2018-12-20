@@ -1,0 +1,321 @@
+
+## Audio File Convert
+#_afconvert() {
+#  local cur prev opts doms
+#  cur="${COMP_WORDS[COMP_CWORD]}"
+#  prev="${COMP_WORDS[COMP_CWORD-1]}"
+#  opts="-{d,c,m,l,b,q,r,s,u{,d,e},o,f,v,t,h{,f}}" 
+#  opts+=" --{data,channel{s,map,layout},bitrate,quality,src-quality,prime-{method,override},no-filler,"
+#  opts+="soundcheck-generate,media-kind,anchor-{loudness,generate},generate-hash,codec-manuf,dither,mix,userproperty,"
+#  opts+=""
+#}
+
+## Audio File Info
+#  afinfo    
+## Audio File Play
+#_afplay 
+##   Manage Apple AirPort
+#_airport
+## Apple Software Restore
+#_asr
+## Font registration system utility
+#_atsutil  
+## Prevent the system from sleeping
+#_caffeinate
+## Reminder Service
+#_calendar 
+## Cancel print jobs
+#_cancel   
+## Configure System Integrity Protection (SIP)
+#_csrutil  
+## Convert a file to another format using cups filters
+#_cupsfilter
+## Set preferences, show hidden files
+_defaults() {
+  local cur prev opts doms
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  opts="read{,type} write rename delete domains find help"
+  case "${prev}" in
+    defaults)
+      COMPREPLY=( $(compgen -W "${opts}" -- defaults) )
+    read | readtype | write | rename | delete)
+      local doms="NSGlobal $(defaults domains | sed -e 's/,//g')"
+      COMPREPLY=( $(compgen -W "$doms" -- ${cur}) )
+      return 0
+      ;;
+    *)
+      COMPREPLY=""
+      return 0
+      ;;
+  esac
+}
+complete -F _defaults defaults
+#complete -W "'{read{,type},write,rename,delete} NSGlobal' domains find help" defaults;
+## 
+#_diff3     Show differences among three files
+## 
+#_dig       DNS lookup
+## 
+#_diskutil  Disk utilities - Format, Verify, Repair
+## 
+#_ditto     Copy files and folders
+## 
+#_dot_clean Remove dot-underscore files
+## 
+#_drutil    Interact with CD/DVD burners
+## 
+#_dscacheutil  Query or flush the Directory Service/DNS cache
+## 
+#_dseditgroup  Edit, create, manipulate, or delete groups
+## 
+#_dsenableroot Enable root access
+## 
+#_dsmemberutil View user and groups rights
+## 
+#_dscl      Directory Service command line utility
+## 
+#_execsnoop Snoop new process execution
+## 
+#_expand    Convert tabs to spaces
+## 
+#_expect    Programmed dialogue with interactive programs. Also see AppleScript
+
+#_fdisk     Partition table manipulator for Darwin UFS/HFS/DOS
+
+#_fdesetup  FileVault configuration, list FileVault users
+
+#_file      Determine file type
+
+#_fmt       Reformat paragraph text
+
+#_fold      Wrap text to fit a specified width
+
+#_fsck      Filesystem consistency check and repair
+
+#_fs_usage  Filesystem usage (process/pathname)
+
+#_fuser     List processes that have one or more files open
+
+#_GetFileInfo Get attributes of HFS+ files
+
+#_getopt    Parse positional parameters
+
+#_groups    Print group names a user is in
+
+#_halt      Stop and restart the operating system
+
+#_head      Display the first lines of a file
+
+#_hdiutil   Manipulate iso disk images
+
+
+#_hostname  Print or set system name
+
+#_iconv     Convert the character set of a file
+
+#_id        Print user and group names/id's
+
+#_ifconfig  Configure network interface parameters
+
+#_iostat    Report CPU and i/o statistics
+
+#_ipconfig  View and control IP configuration state
+
+#_info      Help info
+
+#_install   Copy files and set attributes
+
+#_iosnoop   Snoop I/O events as they occur
+
+#_kextfind  List kernel extensions
+
+#_kextstat  Display status of loaded kernel extensions (kexts)
+
+#_kextunload Terminate driver instances and unload kernel extensions.
+
+#_kickstart Configure Apple Remote Desktop
+
+#_kill      Kill a process by specifying its PID
+
+#_killall   Kill processes by name
+# Add `killall` tab completion for common apps
+complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
+
+#_l         List files in long format (ls -l)
+
+#_launchctl Load or unload daemons/agents
+
+#_ll        List files in long format, showing invisible files (ls -la)
+
+#_lipo      Convert a universal binary
+
+#_locate    Find files
+
+#_logname   Print current login name
+
+#_look      Display lines beginning with a given string
+
+#_lprm      Remove jobs from the print queue
+
+#_lpstat    Printer status information
+
+#_lsregister Reset the Launch Services database
+
+#_lsbom     List a bill of materials file
+
+#_lsof      List open files
+
+#_mdfind    Spotlight search
+
+#_mdutil    Manage Spotlight metadata store
+
+#_mount     Mount a file system
+
+#_nc/netcat Read and write data across networks
+
+#_net       Manage network resources
+
+#_netstat   Show network status
+
+#_networksetup Network and System Preferences
+
+#_nohup     Run a command immune to hangups
+
+#_ntfs.util NTFS file system utility
+
+#_nvram     Manipulate  firmware variables
+
+#_onintr    Control the action of a shell interrupt
+
+#_open      Open a file/folder/URL/Application
+
+#_opensnoop Snoop file opens as they occur
+
+#_osacompile Compile Applescript
+
+#_osascript Execute AppleScript
+
+#_paste     Merge lines of files
+
+#_pbcopy    Copy data to the clipboard
+
+#_pbpaste   Paste data from the Clipboard
+
+#_pgrep     List processes by a full or partial name
+
+#_pkill     Kill processes by a full or partial name
+
+#_pkgbuild  Build a macOS Installer component package
+
+#_pkgutil   Query and manipulate installed packages
+
+#_plutil    Property list utility
+
+#_pmset     Power Management settings
+
+#_pr        Convert text files for printing
+
+#_reboot    Stop and restart the system
+
+#_ReportCrash Enable/Disable crash reporting
+
+#_rpm       Remote Package Manager
+
+#_say       Convert text to audible speech
+
+#_screencapture Capture screen image to file or disk
+
+#_scselect  Switch between network locations
+
+#_scutil    Manage system configuration parameters
+
+#_sdiff     Merge two files interactively
+
+#_security  Administer Keychains, keys, certificates and the Security framework
+
+#_serverinfo Server information
+
+#_setfile   Set attributes of HFS+ files
+
+#_sharing   Create share points for afp, ftp and smb services
+
+#_shasum    Print or Check SHA Checksums
+
+#_shutdown  Shutdown or restart macOS
+
+#_sips      Scriptable image processing system
+
+#_sleep     Delay for a specified time
+
+#_softwareupdate System software update tool
+
+#_sort      Sort text files
+
+#_spctl     Security assessment policy/Gatekeeper
+
+#_split     Split a file into fixed-size pieces
+
+#_sqlite3   SQL database (download history)
+
+#_srm       Securely remove files or directories
+
+#_stat      Display the status of a file
+
+#_stop      Stop a job or process
+
+#_su        Substitute user identity
+
+#_sudo      Execute a command as another user
+
+#_sum       Print a checksum for a file
+
+#_sw_vers   Print macOS operating system version
+
+#_sysctl    Get or set kernel state
+
+#_system_profiler  Report system configuration
+
+#_systemsetup Computer and display system settings
+
+#_tccutil   Manage the privacy database
+
+#_tcpdump   Dump traffic on a network
+
+#_textutil  Manipulate text files in various formats (Doc,html,rtf)
+
+#_tmutil    Time Machine utility
+
+#_traceroute Trace Route to Host
+
+#_trimforce Enable TRIM commands on third-party drives
+
+#_tty       Print filename of terminal on stdin
+
+#_ufs.util  Mount/unmount UFS file system
+
+#_umount    Unmount a device
+
+#_uname     Print system information
+
+#_unexpand  Convert spaces to tabs
+
+#_units     Convert units from one scale to another
+
+#_uptime    Show how long system has been running
+
+#_users     Print login names of users currently logged in
+
+#_until     Execute commands (until error)
+
+#_uuencode  Encode a binary file 
+
+#_uudecode  Decode a file created by uuencode
+
+#_uuidgen   Generate a Unique ID (UUID/GUID)
+
+#_xcode-select --install  Install the command line developer tools
+
+#_zip       Package and compress (archive) files.
+
+
