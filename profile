@@ -45,7 +45,6 @@ fi
 
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 export GREP_OPTIONS='--colour=auto'
-export LESS="-MqRs"
 
 # set default options for 'ls'
 export LSCOLORS="exfxcxdxbxegedabagacad"
