@@ -103,11 +103,13 @@ if ${use_color} ; then
 	alias fgrep='fgrep --colour=auto'
 fi
 
-for file in $HOME/.{extra,prompt,exports,aliases,functions,function_*,path,grep,prompt,nvm,completion,custom}; do
+for file in $HOME/.{aliases,functions,,completion}; do
     [[ -r "$file" ]] && source "$file"
 done
 
-#if [[ $(uname) == Darwin ]]; then for file in $HOME/.{bash}.macos; do [[ -f $file ]] && source $file; done; fi
+if [[ $(uname) == Darwin ]]; then 
+	for file in $HOME/.{bash,aliases}.macos; do 
+		[[ -r $file ]] && source $file; done; fi
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
