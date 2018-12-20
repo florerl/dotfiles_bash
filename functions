@@ -1,16 +1,23 @@
 echo "Bash Functions"
 
-man() {
+cman() {
 	# Set colors for less.
+		# begin blink
+		# begin bold
+		# reset bold/blink
+		# begin reverse video
+		# reset reverse video
+		# begin underline
+		# reset underline
 	env \
-	LESS_TERMCAP_mb=$(tput blink; tput setaf 1) \	# begin blink
-	LESS_TERMCAP_md=$(tput bold; tput setaf 1) \ 	# begin bold
-	LESS_TERMCAP_me=$(tput sgr0) \               	# reset bold/blink
-	LESS_TERMCAP_so=$(tput smso) \              	# begin reverse video
-	LESS_TERMCAP_se=$(tput rmso) \              	# reset reverse video
-	LESS_TERMCAP_us=$(tput smul; tput setaf 2) \ 	# begin underline
- 	LESS_TERMCAP_ue=$(tput rmul; tput sgr0) \    	# reset underline
- 		man "$@"
+	LESS_TERMCAP_mb=$(tput blink; tput setaf 1) \
+	LESS_TERMCAP_md=$(tput bold; tput setaf 1) \
+	LESS_TERMCAP_me=$(tput sgr0) \
+	LESS_TERMCAP_so=$(tput smso) \
+	LESS_TERMCAP_se=$(tput rmso) \
+	LESS_TERMCAP_us=$(tput smul; tput setaf 2) \
+ 	LESS_TERMCAP_ue=$(tput rmul; tput sgr0) \
+		man "$@"
 }
 
 
