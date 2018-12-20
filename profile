@@ -72,6 +72,17 @@ if which go > /dev/null; then
 	export GOTMPDIR=$(go env GOTMPDIR)
 fi
 
+export PYTHONIOENCODING='UTF-8';
+
+# set default options for 'node'
+# Enable persistent REPL history for `node`.
+export NODE_REPL_HISTORY=~/.node_history;
+# Allow 32³ entries; the default is 1000.
+export NODE_REPL_HISTORY_SIZE='32768';
+# Use sloppy mode by default, matching web browsers.
+export NODE_REPL_MODE='sloppy';
+
+
 ####
 #set -o vi	# enable vi-mode editinga
 
