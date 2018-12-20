@@ -1,26 +1,64 @@
 function  update {
 	sudo /usr/sbin/softwareupdate -i -a
+	
 	# Homebrew
-	if [ -x $(which brew) ]; then
-			brew update 
-			brew upgrade
-			brew cask upgrade
-			brew cleanup
+	BIN=$(which brew)
+	if [ -x ${BIN} ]; then
+		${BIN} update && ( ${BIN} upgrade; ${BIN} cask upgrade )
+		${BIN} doctor
+		${BIN} cleanup
 	fi
 	# MacPorts
-	if [ -x $(which port) ]; then
-		sudo port selfupdate 
-		sudo port upgrade outdated
+	BIN=$(which port)
+	if [ -x  ${BIN} ]; then
+		sudo ${BIN} selfupdate 
+		sudo ${BIN} upgrade outdated
 	fi
+	# Fink Binary
+	BIN=$(which apt-get)
+	if [ -x  ${BIN} ]; then
+		${BIN} update && ${BIN} upgrade 
+	fi
+
+	# Fink Source
+	BIN=$(which fink)
+	if [ -x  ${BIN} ]; then
+		${BIN} selfupdate
+		${BIN} upgrade outdated
+	fi
+
 	# Node Package Manger
-	if [ -x $(which npm) ]; then
-		npm install npm -g 
-		npm update -g
+	BIN=$(which npm)
+	if [ -x ${BIN} ]; then
+		${BIN} install npm -g 
+		${BIN} update -g
 	fi
-    # RubyGems
-	#sudo gem update --system 
-	#sudo gem update 
-	#sudo gem cleanup'
+	# RubyGems
+    	BIN=$(which gem)
+	if [ -x ${BIN} ]; then
+		#${BIN} update --system 
+		#${BIN} update
+		#${BIN} cleanup
+	fi
+	# Python
+	for BIN in $(which pip3 pip2); do
+		if [ -x ${BIN} ]; then
+			${BIN} install --upgrade pip
+			#LIST=$(${BIN} list --outdated --not-required | ${AWK} '{print $1}')
+			#for pkg in LIST do
+			#   ${BIN} install --upgrade pkg
+			#done
+		fi
+	done
+	# Nix Multi-User
+	#sudo -i sh -c 'nix-channel --update &&
+	#    nix-env -iA nixpkgs.nix &&
+	#    launchctl remove org.nixos.nix-daemon &&
+	#    launchctl load /Library/LaunchDaemons/org.nixos.nix-daemon.plist'
+	#nix-env -u;
+	
+	# Nix Single User
+	#nix-channel --update; nix-env -iA nixpkgs.nix; nix-env -u;
 }
 
 # Use Git’s colored diff when available
@@ -252,3 +290,175 @@ function o() {
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+# Function to quickly create an application icon from 1024px master file.
+#function mkicns() {
+#    if [[ -z "$@" ]]; then
+#        echo "Input file missing"
+#    else
+#        filename=${1%.*}
+#        mkdir $filename.iconset
+#        sips -z 16 16   $1 --out $filename.iconset/icon_16x16.png
+#        sips -z 32 32   $1 --out $filename.iconset/icon_16x16@2x.png
+#        sips -z 32 32   $1 --out $filename.iconset/icon_32x32.png
+#        sips -z 64 64   $1 --out $filename.iconset/icon_32x32@2x.png
+#        sips -z 128 128 $1 --out $filename.iconset/icon_128x128.png
+#        sips -z 256 256 $1 --out $filename.iconset/icon_128x128@2x.png
+#        sips -z 256 256 $1 --out $filename.iconset/icon_256x256.png
+#        sips -z 512 512 $1 --out $filename.iconset/icon_256x256@2x.png
+#        sips -z 512 512 $1 --out $filename.iconset/icon_512x512.png
+#        cp $1 $filename.iconset/icon_512x512@2x.png
+#        iconutil -c icns $filename.iconset
+#        rm -r $filename.iconset
+#    fi
+#}
+
+# This function will use AppleScript to present a password entry dialog to make your scripts a little more user friendly.
+#function gui_password {
+#    if [[ -z $1 ]]; then
+#        gui_prompt="Password:"
+#    else
+#        gui_prompt="$1"
+#    fi
+#    PW=$(osascript <<EOF
+#    tell application "System Events"
+#        activate
+#        text returned of (display dialog "${gui_prompt}" default answer "" with hidden answer)
+#    end tell
+#EOF
+#    )
+#
+#    echo -n "${PW}"
+#}
+
+# Get Path of Frontmost Finder Window
+#function finder_path {
+#    osascript -e 'tell application "Finder"'\
+#        -e "if (${1-1} <= (count Finder windows)) then"\
+#        -e "get POSIX path of (target of window ${1-1} as alias)"\
+#        -e 'else' \
+#        -e 'get POSIX path of (desktop as alias)'\
+#        -e 'end if' \
+#        -e 'end tell';
+#}
+
+# Print Files Selected in Finder
+#selected() {
+#    osascript <<EOT
+#        tell application "Finder"
+#            set theFiles to selection
+#            set theList to ""
+#            repeat with aFile in theFiles
+#                set theList to theList & POSIX path of (aFile as alias) & "\n"
+#            end repeat
+#            theList
+#        end tell
+#EOT
+#}
+
+# Set Current Directory's Finder View to Column View
+#function column_view {
+#    osascript -e 'set cwd to do shell script "pwd"'\
+#      -e 'tell application "Finder"'\
+#      -e "if (${1-1} <= (count Finder windows)) then"\
+#      -e "set the target of window ${1-1} to (POSIX file cwd) as string"\
+#      -e "set the current view of the front Finder window to column view"\
+#      -e 'else' -e "open (POSIX file cwd) as string"\
+#      -e "set the current view of the front Finder window to column view"\
+#      -e 'end if' -e 'end tell';
+#}
+
+# Set Current Directory's Finder View to Icon View
+#function icon_view {
+#    osascript -e 'set cwd to do shell script "pwd"'\
+#      -e 'tell application "Finder"'\
+#      -e "if (${1-1} <= (count Finder windows)) then"\
+#      -e "set the target of window ${1-1} to (POSIX file cwd) as string"\
+#      -e "set the current view of the front Finder window to icon view"\
+#      -e 'else' -e "open (POSIX file cwd) as string"\
+#      -e "set the current view of the front Finder window to icon view"\
+#      -e 'end if' -e 'end tell';
+#};
+
+# Set Current Directory's Finder View to List View
+#function list_view {
+#  osascript -e 'set cwd to do shell script "pwd"'\
+#    -e 'tell application "Finder"'\
+#    -e "if (${1-1} <= (count Finder windows)) then"\
+#    -e "set the target of window ${1-1} to (POSIX file cwd) as string"\
+#    -e "set the current view of the front Finder window to list view"\
+#    -e 'else' -e "open (POSIX file cwd) as string"\
+#    -e "set the current view of the front Finder window to list view"\
+#    -e 'end if' -e 'end tell';\
+#}
+
+
+# Cleans py[cod] and __pychache__ dirs in the current tree:
+#pyclean () {
+#  find . | grep -E "(__pycache__|\.py[cod]$)" | xargs rm -rf
+#}
+
+
+#git-dowloadfolder () {
+#  url="$1"
+#  svn checkout ${url/tree\/master/trunk}
+#}
+
+
+# pipenv shell breaks sometimes. This does not.
+#pipenv-shell () {
+#  source "$(pipenv --venv)/bin/activate"
+#}
+
+
+# See https://transfer.sh/
+#transfer () {
+#  if [ $# -eq 0 ]; then echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi
+#tmpfile=$( mktemp -t transferXXX )
+#if tty -s; then 
+#	basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+#	curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile
+#	else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile 
+#fi
+#cat $tmpfile
+#rm -f $tmpfile;
+#}
+
+
+# cd into whatever is the forefront Finder window.
+#cdf () {
+#  local path=$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')
+#  echo "$path"
+#  cd "$path"
+#}
+
+
+#findEmptyDirsAndFiles(){
+#  find . -type f -exec bash -c 'if [ `cat "{}" |wc -w` -eq 0 ]; then echo "file - {}";fi' \; -or -empty -exec bash -c "echo dir - {}" \;
+#}
+
+
+#convertAllMDFilesToTabs(){
+# find . -name '*.md' ! -type d -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+#}
+
+# ram <process-name> - Find how much RAM a process is taking.
+#ram() {
+#  local sum
+#  local items
+#  local app="$1"
+#  if [ -z "$app" ]; then
+#    echo "First argument - pattern to grep from processes"
+#  else
+#    sum=0
+#    for i in `ps aux | grep -i "$app" | grep -v "grep" | awk '{print $6}'`; do
+#      sum=$(($i + $sum))
+#    done
+#    sum=$(echo "scale=2; $sum / 1024.0" | bc)
+#    if [[ $sum != "0" ]]; then
+#      echo "${fg[blue]}${app}${reset_color} uses ${fg[green]}${sum}${reset_color} MBs of RAM."
+#    else
+#      echo "There are no processes with pattern '${fg[blue]}${app}${reset_color}' are running."
+#    fi
+#  fi
+#}
