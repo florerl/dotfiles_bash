@@ -7,14 +7,25 @@
 
 - link:
     $HOME/.dotfiles: ''
+    $HOME/.aliases:
+    $HOME/.aliases.macos:
+    $HOME/.bash.macos:
+    $HOME/.bash_profile:
+    $HOME/.bashrc:
+    $HOME/.curlrc:
+    $HOME/.functions:
+    $HOME/.functions.macos:
+    $HOME/.inputrc:
+    $HOME/.profile:
+    $HOME/.config:
+    $HOME/.git:
+    $HOME/.gnupg:
+    $HOME/.spack:
     $HOME/.vim:
-    $HOME/.vimrc: vim/vimrc
+    $HOME/.xcode:
+    $HOME/.prompt: liquidprompt/liquidprompt
     $HOME/.spacemacs: spacemacs_config
     $HOME/.emacs.d: spacemacs/
-    $HOME/.gitconfig:
-    $HOME/.gitignore_global:
-    $HOME/.prompt: liquidprompt/liquidprompt
-    $HOME/.config:
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
