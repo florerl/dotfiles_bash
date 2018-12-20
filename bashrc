@@ -102,7 +102,7 @@ if ${use_color} ; then
 	alias fgrep='fgrep --colour=auto'
 fi
 
-for file in $HOME/.{aliases,functions,,completion}; do
+for file in $HOME/.{aliases,functions,completion}; do
     [[ -r "$file" ]] && source "$file"
 done
 
