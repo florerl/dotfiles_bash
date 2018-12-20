@@ -29,5 +29,5 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
-  - [sh scripts/bootstrap.sh, Bootstrapping system]
-  - [sh scripts/setup.sh, Finishing setup]
+#  - [sh scripts/bootstrap.sh, Bootstrapping system]
+#  - [sh scripts/setup.sh, Finishing setup]
