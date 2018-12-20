@@ -24,8 +24,8 @@
     $HOME/.vim:
     $HOME/.xcode:
     $HOME/.prompt: liquidprompt/liquidprompt
-    $HOME/.spacemacs: spacemacs_config
     $HOME/.emacs.d: spacemacs/
+    $HOME/.spacemacs: spacemacs_config
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
