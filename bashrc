@@ -19,9 +19,7 @@ echo "BashRC"
 # set default options for 'bash/GNU'
 export HISTCONTROL='ignoreboth'
 export HISTTIMEFORMAT='%F %T'
-export TIMEFORMAT= $'\nreal\t%lR\tuser\t%lU\tsys%lS'
-
-
+export TIMEFORMAT='\nreal\t%lR\tuser\t%lU\tsys%lS'
 
 # Commands in this section will be executed only by interactive shells.
 
