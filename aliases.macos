@@ -1,3 +1,5 @@
+echo "macOS Bash Aliases"
+
 # Application.app
 alias safari='open -a Safari'
 alias chrome='open -a Chrome'
@@ -50,3 +52,5 @@ alias bonjouron="defaults write /System/Library/LaunchDaemons/com.apple.mDNSResp
 
 # Pipe my public key to my clipboard.
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+
+echo "End macOS Bash Aliases"
