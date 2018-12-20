@@ -2,9 +2,6 @@
 [ -z "$PS1" ] && return
 echo "Bash Profile"
 
-if [ -f $HOME/.profile ]; then source $HOME/.profile; fi
-
-
 if [ -f ~/.bashrc ]; then
 	source ~/.bashrc
 fi
