@@ -94,3 +94,6 @@ alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && 
 
 alias bonjouroff="defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array-add -NoMulticastAdvertisements"
 alias bonjouron="defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array /usr/sbin/mDNSResponder -launchd"
+
+# Pipe my public key to my clipboard.
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
