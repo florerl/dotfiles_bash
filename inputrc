@@ -25,6 +25,8 @@ set output-meta on
 # Show all autocomplete results at once
 set page-completions off
 
+set print-completions-horizontally on
+
 # List all matches in case multiple possible completions are possible
 set show-all-if-ambiguous on
 
