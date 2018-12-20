@@ -1,3 +1,4 @@
+echo "Bash Aliases"
 # Use Python 3
 alias python=python3
 alias pip=pip3
@@ -45,3 +46,4 @@ ccat=$(which ccat)
 [ -x "${ccat}" ] && alias cat="${ccat}";
 unset ccat;
 
+echo "End Bash Aliases"
