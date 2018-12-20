@@ -36,10 +36,11 @@ function  update {
 	# RubyGems
     	BIN=$(which gem)
 	if [ -x ${BIN} ]; then
-		#${BIN} update --system 
-		#${BIN} update
-		#${BIN} cleanup
+		${BIN} update --system 
+		${BIN} update
+		${BIN} cleanup
 	fi
+	
 	# Python
 	for BIN in $(which pip3 pip2); do
 		if [ -x ${BIN} ]; then
