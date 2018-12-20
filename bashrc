@@ -113,11 +113,6 @@ unset file use_color color_prompt
 
 ### End of interactive section ###
 
-# shortcut to this dotfiles path is $ZSH
-#export ZSH=$HOME/.dotfiles
-
-# your project folder that we can `c [tab]` to
-#export PROJECTS=~/Code
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
