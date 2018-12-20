@@ -1,10 +1,10 @@
 [submodule "dotbot"]
-    path = dotbot
-    url = https://github.com/anishathalye/dotbot
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot.git
 
 [submodule "liquidprompt"]
-    path = liquidprompt
-    url = https://github.com/nojhan/liquidprompt
+	path = liquidprompt
+	url = https://github.com/nojhan/liquidprompt.git
 
 [submodule "solarized"]
     path = solarized
