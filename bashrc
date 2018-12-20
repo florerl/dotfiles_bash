@@ -13,8 +13,9 @@ if [ -r $HOME/.profile ]; then source $HOME/.profile; fi
 ### End of universal section ###
 if [[ $- != *i* ]] ; then return fi  # Shell is non-interactive.  Be done now!
 
-
 ### Start of interactive section ###
+echo "BashRC"
+
 # set default options for 'bash/GNU'
 export HISTCONTROL='ignoreboth'
 export HISTTIMEFORMAT='%F %T'
@@ -120,6 +121,6 @@ if [[ -r ~/.localrc ]]; then source ~/.localrc; fi
 unset file use_color color_prompt
 
 ### End of interactive section ###
-
+echo "End BashRC"
 
 
