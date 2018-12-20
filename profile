@@ -72,7 +72,7 @@ export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)    # reset underline
 
 
 
-export JAVA_HOME=$(/usr/libexec/java_home -v )
+#export JAVA_HOME=$(/usr/libexec/java_home -v )
 if which go > /dev/null; then
 	export GOPATH=$(go env GOPATH)
 	export GOROOT=$(go env GOROOT)
