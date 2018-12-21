@@ -6,7 +6,6 @@
 - clean: ['$HOME']
 
 - link:
-    $HOME/.dotfiles: ''
     $HOME/.aliases:
     $HOME/.aliases.macos:
     $HOME/.bash.macos:
