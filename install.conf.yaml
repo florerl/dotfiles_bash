@@ -26,8 +26,11 @@
     $HOME/.prompt: liquidprompt/liquidprompt
     $HOME/.emacs.d: spacemacs/
     $HOME/.spacemacs: spacemacs_config
-
+    $HOME/.vim/colors/: solarized/vim-colors-solarized/colors/solarized.vim 
+    $HOME/Library/Colors/solarized.clr: solarized/apple-colorpalette-solarized/solarized.clr
+    
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+  - [open solarized/osx-terminal.app-colors-solarized, Installing Solarized for Terminal.app]
 #  - [sh scripts/bootstrap.sh, Bootstrapping system]
 #  - [sh scripts/setup.sh, Finishing setup]
