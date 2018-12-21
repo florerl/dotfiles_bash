@@ -7,12 +7,6 @@ defaults write NSGlobalDomain AppleEnableSwipeNavigateWithScrolls -bool true
 # Enable subpixel font rendering on non-Apple LCDs
 defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
-# Set highlight color
-#defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600" #Green
-
-# Finder: show all filename extensions
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-
 # Set sidebar icon size
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
@@ -28,6 +22,8 @@ defaults write NSGlobalDomain AppleAccentColor -int 5;
 defaults write NSGlobalDomain AppleActionOnDoubleClick -string Minimize;
 defaults write NSGlobalDomain AppleAntiAliasingThreshold -int 4;
 defaults write NSGlobalDomain AppleAquaColorVariant -int 1;
+# Set highlight color
+#defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600" #Green
 defaults write NSGlobalDomain AppleHighlightColor -string "0.968627 0.831373 1.000000 Purple";
 defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
 defaults write NSGlobalDomain AppleInterfaceStyle -string Dark
@@ -81,7 +77,10 @@ defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 
-defaults write NSGlobalDomain NSPreferredWebServices '{NSWebServicesProviderWebSearch = {NSDefaultDisplayName = DuckDuckGo; NSProviderIdentifier = "com.duckduckgo"}}';
+## CFPropertyListCreateFromXMLData(): Old-style plist parser: missing semicolon in dictionary on line 1. Parsing will be abandoned. Break on _CFPropertyListMissingSemicolon to debug.
+## CFPropertyListCreateFromXMLData(): Old-style plist parser: missing semicolon in dictionary on line 1. Parsing will be abandoned. Break on _CFPropertyListMissingSemicolon to debug.
+## Could not parse: {NSWebServicesProviderWebSearch = {NSDefaultDisplayName = DuckDuckGo; NSProviderIdentifier = "com.duckduckgo"}}.  Try single-quoting it.
+#defaults write NSGlobalDomain NSPreferredWebServices '{NSWebServicesProviderWebSearch = {NSDefaultDisplayName = DuckDuckGo; NSProviderIdentifier = "com.duckduckgo"}}';
 
 defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool true
 
